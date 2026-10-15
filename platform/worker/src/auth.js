@@ -68,7 +68,12 @@ export async function login(request, env) {
   const user = await env.DB.prepare(`SELECT id, tenant_id, username, password_hash,
     name, role, company_id, status FROM users WHERE tenant_id = ? AND username = ? LIMIT 1`)
     .bind(project, username).first()
-  const verified = await verifyPassword(body.password, user?.password_hash)
+  let verified
+  try {
+    verified = await verifyPassword(body.password, user?.password_hash)
+  } catch {
+    throw new HttpError(503, 'PASSWORD_CRYPTO_UNAVAILABLE', '密碼驗證暫時不可用')
+  }
   if (!verified || Number(user?.status) !== 1) {
     throw new HttpError(401, 'INVALID_CREDENTIALS', '帳號或密碼錯誤')
   }

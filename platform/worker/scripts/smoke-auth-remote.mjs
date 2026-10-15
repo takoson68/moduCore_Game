@@ -44,6 +44,8 @@ try {
   seeded = true
   const start = performance.now()
   const login = await request('/api/login', { method: 'POST', body: { username, password } })
+  if (login.response.status !== 200) console.error({ stage: 'login',
+    status: login.response.status, code: login.data?.error?.code, traceId: login.data?.traceId })
   assert.equal(login.response.status, 200, '遠端登入應成功')
   assert.equal(login.data.success, true)
   assert.equal(login.data.user.tenant_id, project)

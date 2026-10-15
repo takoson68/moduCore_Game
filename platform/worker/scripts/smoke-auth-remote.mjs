@@ -39,6 +39,19 @@ async function request(path, { method = 'GET', token, body, projectId = project 
 
 let seeded = false
 try {
+  // 部署切換可能尚未抵達驗收節點；先用無憑證查詢等待新 Auth 路由，不重試登入寫入。
+  let ready = false
+  for (let attempt = 0; attempt < 30; attempt++) {
+    const probe = await request('/api/session')
+    if (probe.response.status === 200 && probe.data?.success === true &&
+        probe.data.authenticated === false && probe.response.headers.has('x-trace-id')) {
+      ready = true
+      break
+    }
+    if (probe.response.status !== 404) throw new Error(`Auth 就緒檢查失敗：HTTP ${probe.response.status}`)
+    await new Promise(resolve => setTimeout(resolve, 2000))
+  }
+  assert.equal(ready, true, '部署切換後 Auth 路由應在期限內就緒')
   await remoteSQL(`INSERT INTO users (tenant_id,username,password_hash,name,role,status)
     VALUES ('${project}','${username}','${hash}','M3 合成驗收','staff',1)`)
   seeded = true

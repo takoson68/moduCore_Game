@@ -7,7 +7,7 @@
   "workers_dev": true,
   "preview_urls": false,
   "vars": {
-    "PROJECT_ID": "project-a"
+    "PROJECT_ID": "dineCore"
   },
   "assets": {
     "directory": "../frontend/dist",

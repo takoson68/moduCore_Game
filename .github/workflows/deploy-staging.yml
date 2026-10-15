@@ -45,10 +45,10 @@ jobs:
         working-directory: platform/frontend
         run: npm ci
 
-      - name: Build project-a static assets
+      - name: Build dineCore static assets
         working-directory: platform/frontend
         env:
-          VITE_PROJECT: project-a
+          VITE_PROJECT: dineCore
         run: npm run build:cloudflare
 
       - name: Test frontend API token transport

@@ -84,3 +84,7 @@ jobs:
       - name: Verify public staging endpoints
         working-directory: platform/worker
         run: node scripts/smoke.mjs https://moducore-staging.takoson68.workers.dev
+
+      - name: Verify remote authentication and D1 session lifecycle
+        working-directory: platform/worker
+        run: node scripts/smoke-auth-remote.mjs

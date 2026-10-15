@@ -71,7 +71,7 @@ test('D1 登入保存安全雜湊，回傳既有身份欄位與隨機 Token', as
   assert.notEqual(saved.token_hash, login.token)
   assert.equal(saved.expires_at - saved.created_at, 28800)
   const user = await db.prepare('SELECT * FROM users WHERE id = 1').first()
-  assert.match(user.password_hash, /^pbkdf2-sha256\$600000\$/)
+  assert.match(user.password_hash, /^scrypt\$16384\$8\$5\$/)
   assert.ok(!JSON.stringify(user).includes(password))
 })
 

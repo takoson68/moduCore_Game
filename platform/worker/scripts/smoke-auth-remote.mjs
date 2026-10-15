@@ -48,7 +48,10 @@ try {
       ready = true
       break
     }
-    if (probe.response.status !== 404) throw new Error(`Auth 就緒檢查失敗：HTTP ${probe.response.status}`)
+    const previousProject = probe.response.status === 403 && probe.data?.error?.code === 'PROJECT_MISMATCH'
+    if (probe.response.status !== 404 && !previousProject) {
+      throw new Error(`Auth 就緒檢查失敗：HTTP ${probe.response.status}`)
+    }
     await new Promise(resolve => setTimeout(resolve, 2000))
   }
   assert.equal(ready, true, '部署切換後 Auth 路由應在期限內就緒')

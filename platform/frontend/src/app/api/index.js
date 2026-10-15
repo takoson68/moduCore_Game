@@ -22,8 +22,7 @@ export async function apiRequest(path, options = {}) {
     method = 'GET',
     body,
     headers = {},
-    requireProject = true,
-    tokenQuery = false
+    requireProject = true
   } = options
 
   if (requireProject && !projectName) {
@@ -46,11 +45,7 @@ export async function apiRequest(path, options = {}) {
     requestHeaders.Authorization = `Bearer ${token}`
   }
 
-  let url = path
-  if (token && tokenQuery) {
-    const separator = url.includes('?') ? '&' : '?'
-    url = `${url}${separator}token=${encodeURIComponent(token)}`
-  }
+  const url = path
 
   let payload
   if (body !== undefined) {
@@ -109,7 +104,7 @@ export const authApi = {
     return result
   },
   async session() {
-    return apiRequest('/api/session', { tokenQuery: true })
+    return apiRequest('/api/session')
   },
   async restoreSession() {
     const tokenStore = resolveStore('token')
@@ -117,7 +112,7 @@ export const authApi = {
     const token = tokenStore?.getToken?.()
     if (!token) return { ok: true, status: 204, data: null }
 
-    const result = await apiRequest('/api/session', { tokenQuery: true })
+    const result = await apiRequest('/api/session')
     applySession(authStore, tokenStore, result.data, token)
     return result
   }

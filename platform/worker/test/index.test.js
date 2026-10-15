@@ -71,10 +71,10 @@ test('未知 API 回傳 JSON 404', async () => {
   )
 
   assert.equal(response.status, 404)
-  assert.deepEqual(await response.json(), {
-    ok: false,
-    error: { code: 'NOT_FOUND' },
-  })
+  const body = await response.json()
+  assert.equal(body.ok, false)
+  assert.equal(body.error.code, 'NOT_FOUND')
+  assert.equal(body.traceId, response.headers.get('x-trace-id'))
 })
 
 test('非 API 請求可交給 Static Assets', async () => {
@@ -85,4 +85,11 @@ test('非 API 請求可交給 Static Assets', async () => {
 
   assert.equal(response.status, 200)
   assert.equal(await response.text(), 'asset:/deep/link')
+})
+
+test('自訂 HTTP 方法不能命中 Object 原型方法', async () => {
+  const response = await worker.fetch(new Request('https://example.test/api/health', {
+    method: 'constructor',
+  }), createEnvironment())
+  assert.equal(response.status, 405)
 })

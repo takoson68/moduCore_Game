@@ -51,6 +51,10 @@ jobs:
           VITE_PROJECT: project-a
         run: npm run build:cloudflare
 
+      - name: Test frontend API token transport
+        working-directory: platform/frontend
+        run: npm run test:api
+
       - name: Install Worker dependencies
         working-directory: platform/worker
         run: npm ci

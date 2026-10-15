@@ -18,6 +18,7 @@ before(async () => {
   mf = new Miniflare(convertV4MiniflareOptions({
     modules,
     compatibilityDate: '2026-10-15',
+    compatibilityFlags: ['nodejs_compat'],
     bindings: { PROJECT_ID: project },
     d1Databases: ['DB'],
   }))
@@ -189,7 +190,8 @@ test('Migration 批次失敗時，新建的資料表也會回復', async () => {
 
 test('未完成 Migration 的 D1 錯誤不洩漏內部資料', async () => {
   const empty = new Miniflare(convertV4MiniflareOptions({ modules,
-    compatibilityDate: '2026-10-15', bindings: { PROJECT_ID: project }, d1Databases: ['DB'],
+    compatibilityDate: '2026-10-15', compatibilityFlags: ['nodejs_compat'],
+    bindings: { PROJECT_ID: project }, d1Databases: ['DB'],
   }))
   try {
     const response = await empty.dispatchFetch(`${base}/api/session`, { headers: {

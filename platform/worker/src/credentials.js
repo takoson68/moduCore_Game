@@ -12,10 +12,13 @@ export async function digestToken(token) {
 }
 
 async function derive(password, salt) {
-  const key = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits'])
-  return new Uint8Array(await crypto.subtle.deriveBits({
-    name: 'PBKDF2', hash: 'SHA-256', salt, iterations: ITERATIONS,
-  }, key, 256))
+  // 使用 Workers 的原生 Node.js crypto，保持既有 PBKDF2 格式與強度。
+  return new Promise((resolve, reject) => {
+    pbkdf2(password, salt, ITERATIONS, 32, 'sha256', (error, key) => {
+      if (error) reject(error)
+      else resolve(new Uint8Array(key))
+    })
+  })
 }
 
 export async function hashPassword(password) {
@@ -32,3 +35,5 @@ export async function verifyPassword(password, encoded) {
   for (let i = 0; i < actual.length; i++) difference |= actual[i] ^ expected[i]
   return match !== null && difference === 0
 }
+import { pbkdf2 } from 'node:crypto'
+

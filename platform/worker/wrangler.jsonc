@@ -3,6 +3,7 @@
   "name": "moducore-staging",
   "main": "src/index.js",
   "compatibility_date": "2026-10-15",
+  "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "preview_urls": false,
   "vars": {

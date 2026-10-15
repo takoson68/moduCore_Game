@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:cloudflare": "MODUCORE_DEPLOY_TARGET=cloudflare vite build",
     "preview": "vite preview"
   },
   "devDependencies": {

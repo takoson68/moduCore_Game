@@ -8,14 +8,19 @@ import { cp, mkdir, readdir, rm } from 'node:fs/promises'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const project = env.VITE_PROJECT || 'project-a'
+  const isCloudflareBuild = env.MODUCORE_DEPLOY_TARGET === 'cloudflare'
   // 目前專案以前後端同源為主，暫不使用 VITE_API_TARGET 覆寫 proxy 目標。
   // 若未來改回前後端分離部署，再評估是否重新啟用 env 控制。
   const apiTarget = 'http://moducore_platform.test'
-  const projectOutDir = path.join('projects', project, 'dist')
+  const projectOutDir = isCloudflareBuild
+    ? 'dist'
+    : path.join('projects', project, 'dist')
   const projectDir = path.resolve(__dirname, 'projects', project)
 
   return {
-    plugins: [vue(), copyDistToBackend(project)],
+    // Cloudflare 直接由 Worker Static Assets 讀取 dist；既有本機／PHP
+    // build 仍保留複製到 backend/public 的流程。
+    plugins: [vue(), ...(isCloudflareBuild ? [] : [copyDistToBackend(project)])],
     build: {
       outDir: projectOutDir,
       emptyOutDir: true,

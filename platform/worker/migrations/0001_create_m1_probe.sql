@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS m1_deployment_probe (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT OR IGNORE INTO m1_deployment_probe (id) VALUES (1);

@@ -1,0 +1,82 @@
+name: Deploy staging
+
+on:
+  push:
+    branches:
+      - world-oop
+  workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: 'M1 安全失敗演練：在遠端 migration 與部署前停止'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: moducore-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build, verify and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: staging
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            platform/frontend/package-lock.json
+            platform/worker/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: platform/frontend
+        run: npm ci
+
+      - name: Build project-a static assets
+        working-directory: platform/frontend
+        env:
+          VITE_PROJECT: project-a
+        run: npm run build:cloudflare
+
+      - name: Install Worker dependencies
+        working-directory: platform/worker
+        run: npm ci
+
+      - name: Test Worker
+        working-directory: platform/worker
+        run: npm test
+
+      - name: Verify Worker bundle
+        working-directory: platform/worker
+        run: npm run check
+
+      - name: Simulate safe staging failure
+        if: ${{ inputs.simulate_failure == true }}
+        run: |
+          echo 'M1 failure drill: stop before remote migrations and deployment.'
+          exit 1
+
+      - name: Apply D1 migrations
+        working-directory: platform/worker
+        run: npm run db:migrate:remote
+
+      - name: Deploy Worker and Static Assets
+        working-directory: platform/worker
+        run: npm run deploy
+
+      - name: Verify public staging endpoints
+        working-directory: platform/worker
+        run: node scripts/smoke.mjs https://moducore-staging.takoson68.workers.dev

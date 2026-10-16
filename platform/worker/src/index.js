@@ -1,7 +1,12 @@
 import { login, logout, session } from './auth.js'
+import { listEmployees, createEmployee, updateEmployee, deleteEmployee } from './employees.js'
 import { errorResponse, HttpError, json } from './response.js'
 
 const routes = new Map([
+  ['/api/employees/list', { GET: listEmployees }],
+  ['/api/employees/create', { POST: createEmployee }],
+  ['/api/employees/update', { POST: updateEmployee }],
+  ['/api/employees/delete', { POST: deleteEmployee }],
   ['/api/health', { GET: healthResponse }],
   ['/api/login', { POST: login }],
   ['/api/logout', { POST: logout }],

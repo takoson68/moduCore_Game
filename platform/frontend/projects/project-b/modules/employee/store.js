@@ -3,14 +3,20 @@ import world from '@/world.js'
 export function createEmployeeStore() {
   return world.createStore({
     name: "employeeStore",
-    storageKey: "employeeStore",
+    // 員工個資僅保留記憶體，不載入舊持久化清單。
     defaultValue: {
       list: [],
       search: "",
       editorOpen: false,
       editingEmployee: null,
+      sessionEpoch: 0,
     },
     actions: {
+      resetSession(store) {
+        store.set({ list: [], search: '', editorOpen: false, editingEmployee: null,
+          sessionEpoch: store.state.sessionEpoch + 1 });
+        try { window.localStorage.removeItem('employeeStore'); } catch { /* 儲存空間可能不可用 */ }
+      },
       setSearch(store, text) {
         const state = store.get();
         store.set({ ...state, search: text });
@@ -67,10 +73,11 @@ function normalizeEmployee(employee, fallback = {}) {
     status: "active",
     department: "",
     phone: "",
-    password: employee?.password || "",
     ...fallback,
     ...employee,
   };
+  delete merged.password;
+  delete merged.password_hash;
   return merged;
 }
 

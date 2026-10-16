@@ -12,19 +12,15 @@ const role = computed(() => authStore.state.user?.role || "staff");
 const canManage = computed(() => ["super_admin", "manager"].includes(role.value));
 
 const currentEmployee = computed(() => {
-  const email = authStore.state.user?.email || "";
-  const username = authStore.state.user?.username || "";
   const list = employeeStore.state.list || [];
-  return (
-    list.find((e) => e.email === email || e.username === username) ||
-    authStore.state.user ||
-    null
-  );
+  return list.find(e => e.user_id === authStore.state.user?.id) || null;
 });
 
 const selfPhone = ref("");
-const selfPassword = ref("");
+const error = ref('');
+const loading = ref(false);
 const saving = ref(false);
+const notice = ref('');
 
 watch(
   () => currentEmployee.value,
@@ -47,43 +43,46 @@ function statusLabel(status) {
 }
 
 async function saveSelfProfile() {
+  if (saving.value) return;
   const emp = currentEmployee.value;
   if (!emp?.id) {
-    alert("無法更新資料");
+    error.value = '無法更新資料';
     return;
   }
   const phone = selfPhone.value.trim();
-  const password = selfPassword.value.trim();
-  const payload = {};
-  if (phone !== "") payload.phone = phone;
-  if (password !== "") payload.password = password;
-  if (Object.keys(payload).length === 0) {
-    alert("沒有可更新的內容");
-    return;
-  }
+  const payload = { phone };
+  notice.value = '';
+  error.value = '';
   saving.value = true;
   try {
     await employeeService.update(emp.id, payload);
-    if (password) selfPassword.value = "";
-    alert("已更新");
+    notice.value = '已更新';
   } catch (err) {
-    console.error("[employee/self] update profile failed", err);
-    alert("更新失敗，請稍後再試");
+    error.value = err.message || '更新失敗';
   } finally {
     saving.value = false;
   }
 }
 
-onMounted(() => {
-  employeeService.fetchList().catch((err) => {
-    console.error("[employee/list] fetch employees failed", err);
-  });
-});
+// 失敗明確呈現並清除舊表，不誤報零位員工。
+async function loadEmployees() {
+  notice.value = '';
+  loading.value = true;
+  error.value = '';
+  try { await employeeService.fetchList(); }
+  catch (err) { employeeStore.setList([]); error.value = err.message || '載入失敗'; }
+  finally { loading.value = false; }
+}
+onMounted(loadEmployees);
 </script>
 
 <template lang="pug">
 .employee-page
-  .toolbar(v-if="canManage")
+  p(v-if="notice" role="status") {{ notice }}
+  p(v-if="loading" role="status") 載入中…
+  p(v-if="error" role="alert") {{ error }}
+  button(v-if="error" @click="loadEmployees") 重新載入
+  .toolbar(v-if="canManage && !loading && !error")
     .toolbar-main
       .search
         span.icon 搜尋
@@ -99,10 +98,11 @@ onMounted(() => {
       //- button.icon-btn(title="匯出") ⬇️
       //- button.icon-btn(title="更新") 🔄
 
-  EmployeeTable(v-if="canManage" :show-role="canManage")
+  EmployeeTable(v-if="canManage && !loading && !error" :show-role="canManage")
   EmployeeEditor(v-if="canManage")
 
-  .self-card(v-else)
+  p(v-if="!canManage && !loading && !error && !currentEmployee") 尚未建立員工資料，請聯絡管理員。
+  .self-card(v-if="!canManage && !loading && !error && currentEmployee")
     .card-head
       .head-text
         h3 我的資料
@@ -126,9 +126,6 @@ onMounted(() => {
       .info-item
         span.label 電話
         input.self-input(v-model="selfPhone" type="text" placeholder="輸入電話")
-      .info-item
-        span.label 新密碼
-        input.self-input(v-model="selfPassword" type="password" placeholder="輸入新密碼")
       .info-item
         span.label 狀態
         span.value {{ statusLabel(currentEmployee?.status || 'active') }}

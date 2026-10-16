@@ -32,11 +32,11 @@ export const employeeApi = {
     }
     await delay();
     const nextId = mockDB.reduce((max, e) => Math.max(max, e.id), 0) + 1;
+    const { password, password_hash, ...safePayload } = payload;
     const employee = {
       id: nextId,
       status: "active",
-      password: payload.password || "",
-      ...payload,
+      ...safePayload,
     };
     mockDB = [...mockDB, employee];
     return clone(employee);
@@ -46,7 +46,8 @@ export const employeeApi = {
       return http.post("/api/employees/update", { id, ...payload });
     }
     await delay();
-    mockDB = mockDB.map((e) => (e.id === id ? { ...e, ...payload } : e));
+    const { password, password_hash, ...safePayload } = payload;
+    mockDB = mockDB.map((e) => (e.id === id ? { ...e, ...safePayload } : e));
     return clone(mockDB.find((e) => e.id === id));
   },
   async remove(id) {

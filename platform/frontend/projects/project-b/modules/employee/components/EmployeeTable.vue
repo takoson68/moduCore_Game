@@ -4,6 +4,15 @@ import world from '@/world.js'
 import { employeeService } from "../services/employeeService.js";
 
 const employeeStore = world.store("employeeStore");
+const authStore = world.store('auth');
+const busy = ref(false);
+const error = ref('');
+const deleting = ref(null);
+// 畫面只控制操作可見性，最終授權仍由 Worker 判斷。
+function canEdit(employee) {
+  return authStore.state.user?.role === 'super_admin' ||
+    employee.role === 'staff';
+}
 const emit = defineEmits([]);
 const props = defineProps({
   showRole: { type: Boolean, default: false },
@@ -77,19 +86,27 @@ function handleEdit(employee) {
 }
 
 async function handleDelete(employee) {
-  const ok = confirm(`確定刪除 ${employee?.name || "這名員工"} ？`);
-  if (!ok) return;
+  if (busy.value) return;
+  busy.value = true;
+  error.value = '';
   try {
     await employeeService.remove(employee.id);
+    deleting.value = null;
   } catch (err) {
-    console.error("[employeeTable] delete failed", err);
-    alert("刪除失敗，請稍後再試");
+    error.value = err.message || '刪除失敗';
+  } finally {
+    busy.value = false;
   }
 }
 </script>
 
 <template lang="pug">
 .table(:class="{ 'with-role': showRole }")
+  p(v-if="error" role="alert") {{ error }}
+  .delete-confirm(v-if="deleting" role="alert")
+    p 確定刪除 {{ deleting.name }}？有帳戶或歷史關聯時無法刪除。
+    button(type="button" :disabled="busy" @click="handleDelete(deleting)") 確認刪除
+    button(type="button" :disabled="busy" @click="deleting = null") 取消刪除
   .thead
     .cell 姓名 / 職稱
     .cell 部門
@@ -114,8 +131,8 @@ async function handleDelete(employee) {
         span.chip(:style="statusStyle(e.status)") {{ e.status === 'active' ? '啟用' : '停用' }}
       .cell(v-if="showRole") {{ roleLabel(e.role) }}
       .cell.more
-        button.icon-btn(@click="handleEdit(e)" title="編輯") ✏️
-        button.icon-btn.danger(@click="handleDelete(e)" title="刪除") 🗑️
+        button.icon-btn(v-if="canEdit(e)" @click="handleEdit(e)" title="編輯") ✏️
+        button.icon-btn.danger(v-if="authStore.state.user?.role === 'super_admin' && e.user_id == null" :disabled="busy" @click="deleting = e" title="刪除") 🗑️
 
   .pagination
     .page-size

@@ -1,13 +1,14 @@
 <!-- projects/project-b/layout/LayoutRoot.vue -->
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import world from '@/world.js'
 import ProjectTopbar from '../components/ProjectTopbar.vue'
 import ProjectSidebar from '../components/ProjectSidebar.vue'
 
 const authStore = world.store("auth")
 const route = useRoute()
+const router = useRouter()
 const projectConfig = computed(() => world.projectConfig() || {})
 const isLoggedIn = computed(() => authStore.isLoggedIn())
 const mobileSidebarOpen = ref(false)
@@ -22,8 +23,19 @@ function closeMobileSidebar() {
 }
 
 watch(() => route.fullPath, closeMobileSidebar)
+// 只使用已註冊 Store，不引用模組私有服務。
+watch(() => [authStore.state.user?.tenant_id, authStore.state.user?.id, authStore.state.user?.role].join(':'), () => {
+  try { world.store('employeeStore').resetSession() } catch { /* 模組可缺席 */ }
+}, { immediate: true, flush: 'sync' })
 watch(isLoggedIn, (next) => {
-  if (!next) closeMobileSidebar()
+  if (!next) {
+    closeMobileSidebar()
+    // Session 還原可能在首次 guard 之後完成；失去身份時離開專案受保護頁。
+    const access = route.meta?.access || {}
+    const isPublic = access.public ?? route.meta?.public
+    const requiresAuth = access.auth ?? route.meta?.auth
+    if (isPublic === false && requiresAuth === true) router.replace('/')
+  }
 })
 </script>
 

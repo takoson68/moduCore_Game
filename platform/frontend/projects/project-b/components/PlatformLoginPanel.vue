@@ -1,4 +1,4 @@
-<!-- projects/project-a/components/PlatformLoginPanel.vue -->
+<!-- project-b 專屬登入面板，登入真相由平台 Auth API 與 Store 維護。 -->
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -6,8 +6,8 @@ import world from '@/world.js'
 
 const router = useRouter()
 const authStore = world.store("auth")
-const username = ref('admin')
-const password = ref('5678')
+const username = ref('')
+const password = ref('')
 const loading = ref(false)
 const error = ref('')
 const isOpen = ref(false)
@@ -15,46 +15,79 @@ const isOpen = ref(false)
 const user = computed(() => authStore.state.user)
 const isLoggedIn = computed(() => authStore.isLoggedIn())
 
-async function restoreSession() {
-  loading.value = true
-  error.value = ''
-
-  const { ok, data } = await world.authApi().restoreSession()
-  if (!ok) {
-    error.value = 'Session 取得失敗'
-    loading.value = false
-    return
-  }
-
-  loading.value = false
+// 只顯示安全的錯誤文案，不直接呈現例外或後端原始訊息。
+function failureMessage(status, fallback) {
+  if (status === 429) return '操作過於頻繁，請稍後再試'
+  if (status === 403) return '專案識別不符，請確認目前網站'
+  return fallback
 }
 
-async function handleLogin() {
+// 掛載時透過平台還原 Session；無論失敗原因都解除忙碌狀態。
+async function restoreSession() {
   if (loading.value) return
   loading.value = true
   error.value = ''
 
-  const payload = { username: username.value, password: password.value }
-  const { ok, data } = await world.authApi().login(payload)
-
-  if (!ok || data.success === false) {
-    error.value = data.message || '登入失敗'
+  try {
+    const result = await world.authApi().restoreSession()
+    if (!result.ok || result.data?.success === false) {
+      error.value = failureMessage(result.status, '登入狀態確認失敗，請重新登入')
+    }
+  } catch {
+    error.value = '無法連線確認登入狀態，請稍後再試'
+  } finally {
     loading.value = false
-    return
   }
-
-  isOpen.value = false
-  loading.value = false
 }
 
+// 不修剪密碼、不自行寫入身份，僅在完整登入回應後關閉面板。
+async function handleLogin() {
+  if (loading.value) return
+  if (!username.value.trim() || !password.value) {
+    error.value = '請填寫帳號與密碼'
+    return
+  }
+  loading.value = true
+  error.value = ''
+
+  try {
+    const payload = { username: username.value.trim(), password: password.value }
+    const { ok, data, status } = await world.authApi().login(payload)
+    if (!ok || data?.success === false) {
+      error.value = failureMessage(status, status === 401 ? '帳號或密碼錯誤' : '登入失敗，請稍後再試')
+      return
+    }
+    if (!data?.user || !data?.token) {
+      error.value = '登入回應不完整，請稍後再試'
+      return
+    }
+    isOpen.value = false
+  } catch {
+    error.value = '無法連線登入，請稍後再試'
+  } finally {
+    password.value = ''
+    loading.value = false
+  }
+}
+
+// 等待伺服器確認撤銷，失敗時不顯示已完成登出。
 async function handleLogout() {
   if (loading.value) return
   loading.value = true
   error.value = ''
 
-  await world.authApi().logout()
-  router.replace('/')
-  loading.value = false
+  try {
+    const result = await world.authApi().logout()
+    if (!result.ok || result.data?.success === false) {
+      error.value = failureMessage(result.status, '伺服器尚未確認登出，請稍後再試')
+      return
+    }
+    await router.replace('/')
+  } catch {
+    error.value = '無法連線確認登出，請稍後再試'
+  } finally {
+    loading.value = false
+  }
 }
 
 onMounted(() => {
@@ -84,33 +117,39 @@ onMounted(() => {
         :disabled="loading"
       ) 
         span.status-text(v-if="user") {{ user.name }} 
-        |{{ loading ? ' 登出中...' : ' / 登出' }}
+        |{{ loading ? ' 處理中...' : ' / 登出' }}
 
     Teleport(to="body")
       .login-popover(v-if="isOpen && !isLoggedIn")
         h3.login-title 平台登入
-        p.login-subtitle 使用測試帳密進行登入（帳號 demo / 密碼 demo123）
+        p.login-subtitle 請使用管理員提供的帳號登入
         form.login-form(@submit.prevent="handleLogin")
           input.input-field(
             v-model="username"
             type="text"
             autocomplete="username"
             placeholder="帳號"
+            required
+            :disabled="loading"
           )
           input.input-field(
             v-model="password"
             type="password"
             autocomplete="current-password"
             placeholder="密碼"
+            required
+            :disabled="loading"
           )
           .login-actions
             button.action-btn.outline(type="button" @click="isOpen = false") 關閉
             button.action-btn(type="submit" :disabled="loading")
               | {{ loading ? '登入中...' : '登入' }}
-        p.panel-message.error(v-if="error") {{ error }}
+        p.panel-message.error(v-if="error" role="alert") {{ error }}
 
   
       .login-overlay(v-if="isOpen && !isLoggedIn" @click.self="isOpen = false")
+
+  p.panel-message.error(v-if="error && !isOpen" role="alert") {{ error }}
 
 </template>
 

@@ -79,6 +79,13 @@ jobs:
         working-directory: platform/frontend
         run: npm run test:api
 
+      - name: Test project-b login panel
+        if: matrix.project == 'project-b'
+        working-directory: platform/frontend
+        run: |
+          npm run test:project-b-auth
+          npm run test:employee
+
       - name: Install Worker dependencies
         working-directory: platform/worker
         run: npm ci
@@ -114,3 +121,8 @@ jobs:
         env:
           VERIFY_PEER_ISOLATION: '1'
         run: node scripts/smoke-auth-remote.mjs ${{ matrix.target }}
+
+      - name: Verify project-b Employee API
+        if: matrix.project == 'project-b'
+        working-directory: platform/worker
+        run: node scripts/smoke-employees-remote.mjs --execute-staging

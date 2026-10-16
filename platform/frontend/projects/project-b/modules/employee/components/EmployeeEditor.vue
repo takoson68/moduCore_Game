@@ -9,6 +9,7 @@ const authStore = world.store("auth");
 const open = computed(() => employeeStore.state.editorOpen);
 const editingEmployee = computed(() => employeeStore.state.editingEmployee);
 const isCreate = computed(() => !editingEmployee.value);
+const saving = reactive({ active: false, error: '' });
 const canManage = computed(() => ["super_admin", "manager"].includes(authStore.state.user?.role));
 
 const form = reactive({
@@ -19,13 +20,13 @@ const form = reactive({
   phone: "",
   role: "staff",
   status: "active",
-  password: "",
 });
 
-const roleOptions = [
+const roleOptions = computed(() => [
   { value: "staff", label: "員工" },
   { value: "manager", label: "主管" },
-];
+  { value: "super_admin", label: "管理員職能（不變更登入權限）" },
+].filter(r => authStore.state.user?.role === 'super_admin' || r.value === 'staff'));
 
 const statusOptions = [
   { value: "active", label: "啟用" },
@@ -44,7 +45,6 @@ function syncForm(emp) {
     phone: "",
     role: "staff",
     status: "active",
-    password: "",
   };
   Object.assign(form, { ...base, ...(emp || {}) });
 }
@@ -65,6 +65,7 @@ watch(
 );
 
 async function handleSubmit() {
+  if (saving.active) return;
   if (!canManage.value) {
     alert("權限不足");
     return;
@@ -76,30 +77,31 @@ async function handleSubmit() {
   }
 
   const payload = {
-    ...form,
     id: editingEmployee.value?.id,
     name: form.name.trim(),
     title: form.title.trim(),
     department: form.department.trim(),
     email: form.email.trim(),
     phone: form.phone.trim(),
-    password: form.password?.trim() || "",
+    role: form.role,
+    status: form.status,
   };
 
+  saving.active = true;
+  saving.error = '';
   try {
     if (payload.id) {
-      delete payload.password;
       const { id, ...body } = payload;
       await employeeService.update(id, body);
     } else {
-      payload.password = payload.password?.trim() || "";
       const { id, ...body } = payload;
       await employeeService.create(body);
     }
     employeeStore.closeEditor();
   } catch (err) {
-    console.error("[employeeEditor] save failed", err);
-    alert("儲存失敗，請稍後再試");
+    saving.error = err.message || '儲存失敗';
+  } finally {
+    saving.active = false;
   }
 }
 
@@ -144,13 +146,12 @@ teleport(to="body")
             span.label 狀態
             select(v-model="form.status")
               option(v-for="s in statusOptions" :key="s.value" :value="s.value") {{ s.label }}
-          label.field(v-if="isCreate")
-            span.label 登入密碼（示範）
-            input(v-model="form.password" type="text" placeholder="輸入登入密碼")
+        p 新增員工不會建立登入帳戶；員工角色與狀態不會變更登入權限。
+        p(v-if="saving.error" role="alert") {{ saving.error }}
 
         .footer
           button.ghost(type="button" @click="close") 取消
-          button.primary(type="submit") {{ actionLabel }}
+          button.primary(type="submit" :disabled="saving.active") {{ saving.active ? '儲存中…' : actionLabel }}
 </template>
 
 <style scoped lang="sass">

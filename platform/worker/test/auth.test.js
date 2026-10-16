@@ -10,7 +10,7 @@ let mf, db, password
 const project = 'project-b'
 const base = 'https://example.test'
 const sql = (text, ...values) => db.prepare(text).bind(...values)
-const modules = ['index.js', 'auth.js', 'credentials.js', 'response.js'].map(name => ({
+const modules = ['index.js', 'auth.js', 'credentials.js', 'response.js', 'employees.js'].map(name => ({
   type: 'ESModule', path: fileURLToPath(new URL(`../src/${name}`, import.meta.url)),
 }))
 
@@ -73,6 +73,20 @@ test('D1 登入保存安全雜湊，回傳既有身份欄位與隨機 Token', as
   const user = await db.prepare('SELECT * FROM users WHERE id = 1').first()
   assert.match(user.password_hash, /^scrypt\$16384\$8\$5\$/)
   assert.ok(!JSON.stringify(user).includes(password))
+})
+
+test('實際 Workers Runtime 可執行 Employee 建立、更新、查詢與刪除', async () => {
+  const { token } = await signIn()
+  const created = await request('/api/employees/create', { method: 'POST', token,
+    body: { name: 'Runtime 合成員工', email: 'runtime@example.invalid' } })
+  assert.equal(created.status, 200)
+  const employee = await created.json()
+  assert.equal((await request('/api/employees/update', { method: 'POST', token,
+    body: { id: employee.id, phone: '123' } })).status, 200)
+  const list = await (await request('/api/employees/list', { token })).json()
+  assert.equal(list.find(row => row.id === employee.id).phone, '123')
+  assert.equal((await request('/api/employees/delete', { method: 'POST', token,
+    body: { id: employee.id } })).status, 200)
 })
 
 test('錯誤密碼、停用帳戶、未知帳號及 SQL 注入都無法登入', async () => {

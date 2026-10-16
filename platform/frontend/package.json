@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "test:employee": "node --experimental-vm-modules --test scripts/test-employee-service.mjs",
     "dev": "vite",
     "build": "vite build",
     "build:cloudflare": "node scripts/build-cloudflare.mjs",
     "test:api": "node --experimental-vm-modules scripts/test-api.mjs",
+    "test:project-b-auth": "node --experimental-vm-modules --test scripts/test-project-b-auth.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {

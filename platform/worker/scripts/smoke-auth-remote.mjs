@@ -4,21 +4,22 @@ import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { fileURLToPath } from 'node:url'
 import { digestToken, hashPassword } from '../src/credentials.js'
+import { deploymentTarget } from './deployment-targets.mjs'
 
 const exec = promisify(execFile)
 const cwd = fileURLToPath(new URL('../', import.meta.url))
 const cli = fileURLToPath(new URL('../node_modules/wrangler/bin/wrangler.js', import.meta.url))
-const base = 'https://moducore-staging.takoson68.workers.dev'
-const project = 'dineCore'
+const target = deploymentTarget(process.argv[2])
+const { base, project } = target
 const username = `m3_probe_${crypto.randomUUID().replaceAll('-', '')}`
 const password = crypto.randomUUID() + crypto.randomUUID()
 const hash = await hashPassword(password)
 const userLimitKey = await digestToken(`user:${project}:${username}`)
 
-async function remoteSQL(command) {
+async function remoteSQL(command, sqlTarget = target) {
   try {
-    const { stdout } = await exec(process.execPath, [cli, 'd1', 'execute', 'moducore-staging-db',
-      '--remote', '--json', '--command', command], { cwd, maxBuffer: 1024 * 1024 })
+    const { stdout } = await exec(process.execPath, [cli, 'd1', 'execute', sqlTarget.database,
+      '--config', sqlTarget.config, '--remote', '--json', '--command', command], { cwd, maxBuffer: 1024 * 1024 })
     return JSON.parse(stdout)
   } catch {
     // 不將 CLI 參數、憑證或資料庫回傳寫入錯誤紀錄。
@@ -82,7 +83,19 @@ try {
     assert.equal(result.data.authenticated, true)
   }
   console.log('Session 與還原：通過')
-  assert.equal((await request('/api/session', { token, projectId: 'project-b' })).response.status, 403)
+  if (target.name !== 'moducore-staging' && process.env.VERIFY_PEER_ISOLATION === '1') {
+    // 跨網址使用對方正確的 Project Header，仍不可接受本專案 Token。
+    const peer = deploymentTarget(project === 'project-b' ? 'dinecore-staging' : 'project-b-staging')
+    const peerResponse = await fetch(`${peer.base}/api/session`, {
+      headers: { 'X-Project': peer.project, Authorization: `Bearer ${token}` },
+    })
+    assert.equal(peerResponse.status, 200)
+    assert.equal((await peerResponse.json()).authenticated, false)
+    const peerRows = await remoteSQL(`SELECT COUNT(*) AS n FROM users WHERE username='${username}'`, peer)
+    assert.equal(peerRows[0].results[0].n, 0)
+    console.log('另一專案實際網址拒絕 Token、其 D1 無本次合成帳戶：通過')
+  }
+  assert.equal((await request('/api/session', { token, projectId: project === 'project-b' ? 'dineCore' : 'project-b' })).response.status, 403)
   assert.equal((await request(`/api/session?token=${token}`)).response.status, 400)
   console.log('跨專案與 Query Token 拒絕：通過')
 

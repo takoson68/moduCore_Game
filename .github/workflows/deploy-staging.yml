@@ -14,13 +14,36 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: moducore-staging
-  cancel-in-progress: false
-
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.targets.outputs.matrix }}
+      has-targets: ${{ steps.targets.outputs.has-targets }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - id: targets
+        env:
+          DEPLOY_EVENT: ${{ github.event_name }}
+          DEPLOY_BEFORE: ${{ github.event.before }}
+          DEPLOY_AFTER: ${{ github.sha }}
+        run: node platform/worker/scripts/select-deploy-targets.mjs
+
   deploy:
-    name: Build, verify and deploy
+    needs: plan
+    if: needs.plan.outputs.has-targets == 'true'
+    name: Deploy ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    concurrency:
+      group: ${{ matrix.target }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: staging
@@ -45,11 +68,12 @@ jobs:
         working-directory: platform/frontend
         run: npm ci
 
-      - name: Build dineCore static assets
+      - name: Build isolated project assets
         working-directory: platform/frontend
         env:
-          VITE_PROJECT: dineCore
-        run: npm run build:cloudflare
+          VITE_PROJECT: ${{ matrix.project }}
+          VITE_API_MODE: real
+        run: npm run build:cloudflare -- --outDir ../worker/.assets/${{ matrix.target }}
 
       - name: Test frontend API token transport
         working-directory: platform/frontend
@@ -65,7 +89,7 @@ jobs:
 
       - name: Verify Worker bundle
         working-directory: platform/worker
-        run: npm run check
+        run: npm run check -- --config wrangler.${{ matrix.target }}.json
 
       - name: Simulate safe staging failure
         if: ${{ inputs.simulate_failure == true }}
@@ -75,16 +99,18 @@ jobs:
 
       - name: Apply D1 migrations
         working-directory: platform/worker
-        run: npm run db:migrate:remote
+        run: npm run db:migrate:remote -- --config wrangler.${{ matrix.target }}.json
 
       - name: Deploy Worker and Static Assets
         working-directory: platform/worker
-        run: npm run deploy
+        run: npm run deploy -- --config wrangler.${{ matrix.target }}.json
 
       - name: Verify public staging endpoints
         working-directory: platform/worker
-        run: node scripts/smoke.mjs https://moducore-staging.takoson68.workers.dev
+        run: node scripts/smoke.mjs https://${{ matrix.target }}.takoson68.workers.dev ${{ matrix.target }}
 
       - name: Verify remote authentication and D1 session lifecycle
         working-directory: platform/worker
-        run: node scripts/smoke-auth-remote.mjs
+        env:
+          VERIFY_PEER_ISOLATION: '1'
+        run: node scripts/smoke-auth-remote.mjs ${{ matrix.target }}

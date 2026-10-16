@@ -54,6 +54,15 @@ test('D1 無法使用時回傳穩定錯誤且不洩漏例外內容', async () =>
   })
 })
 
+test('獨立目標 health 使用伺服器設定的服務名稱', async () => {
+  for (const name of ['dinecore-staging', 'project-b-staging']) {
+    const response = await worker.fetch(new Request('https://example.test/api/health'), {
+      ...createEnvironment(), SERVICE_NAME: name,
+    })
+    assert.equal((await response.json()).service, name)
+  }
+})
+
 test('health endpoint 拒絕非 GET 方法', async () => {
   const response = await worker.fetch(
     new Request('https://example.test/api/health', { method: 'POST' }),

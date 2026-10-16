@@ -45,7 +45,7 @@ async function healthResponse(_request, env) {
     return json(
       {
         ok: databaseReady,
-        service: 'moducore-staging',
+        service: env.SERVICE_NAME || 'moducore-staging',
         database: databaseReady ? 'ok' : 'error',
       },
       databaseReady ? 200 : 503
@@ -54,7 +54,7 @@ async function healthResponse(_request, env) {
     return json(
       {
         ok: false,
-        service: 'moducore-staging',
+        service: env.SERVICE_NAME || 'moducore-staging',
         database: 'error',
         error: { code: 'D1_UNAVAILABLE' },
       },

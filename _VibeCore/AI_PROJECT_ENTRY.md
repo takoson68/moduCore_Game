@@ -1,20 +1,28 @@
+---
+status: active
+authority: repository-entry
+updated: 2026-10-15
+implemented: true
+---
+
 # AI 專案入口
 
 ## 用途
 此檔案是 AI 代理在此儲存庫中工作的實務入口點。
 
-請在閱讀以下內容後使用本檔：
+根目錄 `AGENTS.md` 是跨 AI 工具的實務入口；本檔負責把 VibeCore 規則映射到目前 Repository。請在閱讀以下內容後使用本檔：
 
 1. `_VibeCore/STARTUP_DECLARATION.md`
 2. `_VibeCore/RootIndex.md`
 3. 相關的 `_VibeCore/**/index.md`
+4. `_workspace/CURRENT_WORK.md`（只用於恢復停止點）
 
 若任務涉及 project instance 的建立、理解或整理，另需依序閱讀：
 
-4. `_VibeCore/projects/index.md`
-5. `_VibeCore/projects/PROJECT_AUTHORING_STANDARD.md`
-6. `_VibeCore/projects/PROJECT_SCAFFOLD_PROTOCOL.md`
-7. `_VibeCore/projects/templates/index.md`
+5. `_VibeCore/projects/index.md`
+6. `_VibeCore/projects/PROJECT_AUTHORING_STANDARD.md`
+7. `_VibeCore/projects/PROJECT_SCAFFOLD_PROTOCOL.md`
+8. `_VibeCore/projects/templates/index.md`
 
 它的角色與 world 文件不同：
 
@@ -55,9 +63,11 @@
    - 專案層的意義
 3. `_VibeCore/projects/PROJECT_AUTHORING_STANDARD.md`
    - project 文件的固定寫法與章節責任
-4. `platform/frontend/` 與 `platform/backend/` 下的實際原始碼
-   - 目前實作的真實狀況
-5. 根目錄 `README.md`
+4. `platform/frontend/` 與 `platform/backend/` 下的實際原始碼、設定、測試與命令輸出
+   - 目前實作的真實狀況；不得因實作存在就反向放寬 World 規則
+5. `_workspace/CURRENT_WORK.md`
+   - 只提供最近停止點，不具架構裁決權
+6. 根目錄 `README.md`
    - 提供上下文概覽，但不能完全視為真實來源
 
 實務解讀：
@@ -75,17 +85,13 @@
 1. `_VibeCore/STARTUP_DECLARATION.md`
 2. `_VibeCore/RootIndex.md`
 3. `_VibeCore/world/index.md`
-4. `_VibeCore/world/00_PURPOSE.md` 到 `_VibeCore/world/09_WORLD_RULES.md`
-5. `_VibeCore/projects/index.md`
-6. `_VibeCore/projects/PROJECT_AUTHORING_STANDARD.md`
-7. `platform/frontend/src/main.js`
-8. `platform/frontend/src/world.js`
-9. `platform/frontend/src/app/boot/boot.js`
-10. `platform/frontend/src/app/container/`
-11. `platform/frontend/src/router/`
-12. `platform/frontend/projects/loadProject.js`
-13. `platform/frontend/projects/modulesRegistry.js`
-14. 目前啟用的專案 `platform/frontend/projects/{project-name}/`
+4. `_VibeCore/engineering/index.md`
+5. `_VibeCore/engineering/AI_WORKFLOW.md`
+6. `_workspace/CURRENT_WORK.md`
+7. 依當前任務進入相關層級的 `index.md`
+8. 只讀取與任務直接相關的原始碼
+
+不再將所有 World 文件、所有 Project 文件或所有歷史報告列為每次初始化必讀；需要使用某層裁決時，再依該層 `index.md` 完整讀取其要求內容。
 
 若任務涉及後端/API 行為，也請閱讀：
 
@@ -257,6 +263,8 @@ world 文件將 container 描述為能力閘道。
 
 - `project-a`
 - `project-b`
+- `dineCore`
+- `flowCenter`
 - `modudesk`
 - `_proTemp`
 
@@ -285,7 +293,7 @@ world 文件將 container 描述為能力閘道。
 
 ## 後端現況
 
-後端存在，但看起來比前端 world 模型更精簡。
+現有後端是 PHP 8 + PDO MySQL，保留為 API 行為、資料模型與移植驗證的參考來源。已確認的目標 Runtime 是 Cloudflare Workers JavaScript + D1／SQLite。
 
 已知入口脈絡：
 
@@ -297,6 +305,8 @@ world 文件將 container 描述為能力閘道。
 
 - 不要假設前端 world 的抽象在後端程式碼中有完整對映
 - 在宣稱對等性之前，先直接從後端原始碼驗證行為
+- 不為既有 PHP 後端新增功能；新功能與移植目標以 Workers JavaScript 為準
+- 未完成契約對照與資料遷移驗證前，不刪除 PHP 參考實作
 
 ---
 
@@ -351,7 +361,8 @@ world 文件將 container 描述為能力閘道。
 2. `platform/frontend/package.json`
 3. `platform/frontend/vite.config.js`
 4. 目前啟用專案的 `dist/` 目標行為
-5. 後端公開資產目的地
+5. `platform/frontend/vite.config.js` 中既有 PHP public 複製行為
+6. `_workspace/_reports/2026-10-15_moducore_cloudflare_node_d1/EXECUTION_SPEC.md`
 
 ---
 

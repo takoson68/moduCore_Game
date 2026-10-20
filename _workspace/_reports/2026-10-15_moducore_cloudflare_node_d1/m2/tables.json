@@ -1,0 +1,1680 @@
+[
+  {
+    "table": "dinecore_business_closing_history",
+    "declarations": [
+      {
+        "table": "dinecore_business_closing_history",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 25,
+        "ddl": "CREATE TABLE `dinecore_business_closing_history` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `business_date` date NOT NULL,\n  `action` varchar(32) NOT NULL,\n  `actor_user_id` int(10) unsigned DEFAULT NULL,\n  `actor_name` varchar(64) NOT NULL,\n  `actor_role` varchar(32) NOT NULL,\n  `reason` text DEFAULT NULL,\n  `reason_type` varchar(32) NOT NULL DEFAULT 'general',\n  `affected_scopes_json` longtext DEFAULT NULL,\n  `before_status` varchar(32) NOT NULL DEFAULT '',\n  `after_status` varchar(32) NOT NULL DEFAULT '',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_business_closing_history_date` (`business_date`),\n  KEY `fk_dinecore_business_closing_history_actor` (`actor_user_id`),\n  CONSTRAINT `fk_dinecore_business_closing_history_actor` FOREIGN KEY (`actor_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_business_closing_history",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 28,
+        "ddl": "CREATE TABLE `dinecore_business_closing_history` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `business_date` date NOT NULL,\n  `action` varchar(32) NOT NULL,\n  `actor_user_id` int(10) unsigned DEFAULT NULL,\n  `actor_name` varchar(64) NOT NULL,\n  `actor_role` varchar(32) NOT NULL,\n  `reason` text DEFAULT NULL,\n  `reason_type` varchar(32) NOT NULL DEFAULT 'general',\n  `affected_scopes_json` longtext DEFAULT NULL,\n  `before_status` varchar(32) NOT NULL DEFAULT '',\n  `after_status` varchar(32) NOT NULL DEFAULT '',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_business_closing_history_date` (`business_date`),\n  KEY `fk_dinecore_business_closing_history_actor` (`actor_user_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_business_closing_history",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 195,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_business_closing_history (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  business_date DATE NOT NULL,\n  action VARCHAR(32) NOT NULL,\n  actor_user_id INT UNSIGNED NULL,\n  actor_name VARCHAR(64) NOT NULL,\n  actor_role VARCHAR(32) NOT NULL,\n  reason TEXT NULL,\n  reason_type VARCHAR(32) NOT NULL DEFAULT 'general',\n  affected_scopes_json LONGTEXT NULL,\n  before_status VARCHAR(32) NOT NULL DEFAULT '',\n  after_status VARCHAR(32) NOT NULL DEFAULT '',\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  INDEX idx_dinecore_business_closing_history_date (business_date),\n  CONSTRAINT fk_dinecore_business_closing_history_actor\n    FOREIGN KEY (actor_user_id) REFERENCES users(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_business_closing_history",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 25,
+        "ddl": "CREATE TABLE `dinecore_business_closing_history` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `business_date` date NOT NULL,\n  `action` varchar(32) NOT NULL,\n  `actor_user_id` int(10) unsigned DEFAULT NULL,\n  `actor_name` varchar(64) NOT NULL,\n  `actor_role` varchar(32) NOT NULL,\n  `reason` text DEFAULT NULL,\n  `reason_type` varchar(32) NOT NULL DEFAULT 'general',\n  `affected_scopes_json` longtext DEFAULT NULL,\n  `before_status` varchar(32) NOT NULL DEFAULT '',\n  `after_status` varchar(32) NOT NULL DEFAULT '',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_business_closing_history_date` (`business_date`),\n  KEY `fk_dinecore_business_closing_history_actor` (`actor_user_id`),\n  CONSTRAINT `fk_dinecore_business_closing_history_actor` FOREIGN KEY (`actor_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_business_closing_history",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 53,
+        "ddl": "CREATE TABLE `dinecore_business_closing_history` (\n  `id` int UNSIGNED NOT NULL,\n  `business_date` date NOT NULL,\n  `action` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `actor_user_id` int UNSIGNED DEFAULT NULL,\n  `actor_name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `actor_role` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `reason` text COLLATE utf8mb4_unicode_ci,\n  `reason_type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'general',\n  `affected_scopes_json` longtext COLLATE utf8mb4_unicode_ci,\n  `before_status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `after_status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-072",
+      "API-073",
+      "API-074"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_business_closings",
+    "declarations": [
+      {
+        "table": "dinecore_business_closings",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 61,
+        "ddl": "CREATE TABLE `dinecore_business_closings` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `business_date` date NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'open',\n  `closed_at` datetime DEFAULT NULL,\n  `closed_by_user_id` int(10) unsigned DEFAULT NULL,\n  `close_reason_type` varchar(32) NOT NULL DEFAULT 'daily_close',\n  `close_reason` text DEFAULT NULL,\n  `unlocked_at` datetime DEFAULT NULL,\n  `unlocked_by_user_id` int(10) unsigned DEFAULT NULL,\n  `unlock_reason_type` varchar(32) DEFAULT NULL,\n  `unlock_reason` text DEFAULT NULL,\n  `locked_scopes_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `business_date` (`business_date`),\n  KEY `fk_dinecore_business_closings_closed_by` (`closed_by_user_id`),\n  KEY `fk_dinecore_business_closings_unlocked_by` (`unlocked_by_user_id`),\n  CONSTRAINT `fk_dinecore_business_closings_closed_by` FOREIGN KEY (`closed_by_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_business_closings_unlocked_by` FOREIGN KEY (`unlocked_by_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_business_closings",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 63,
+        "ddl": "CREATE TABLE `dinecore_business_closings` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `business_date` date NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'open',\n  `closed_at` datetime DEFAULT NULL,\n  `closed_by_user_id` int(10) unsigned DEFAULT NULL,\n  `close_reason_type` varchar(32) NOT NULL DEFAULT 'daily_close',\n  `close_reason` text DEFAULT NULL,\n  `unlocked_at` datetime DEFAULT NULL,\n  `unlocked_by_user_id` int(10) unsigned DEFAULT NULL,\n  `unlock_reason_type` varchar(32) DEFAULT NULL,\n  `unlock_reason` text DEFAULT NULL,\n  `locked_scopes_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `business_date` (`business_date`),\n  KEY `fk_dinecore_business_closings_closed_by` (`closed_by_user_id`),\n  KEY `fk_dinecore_business_closings_unlocked_by` (`unlocked_by_user_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_business_closings",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 170,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_business_closings (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  business_date DATE NOT NULL UNIQUE,\n  status VARCHAR(32) NOT NULL DEFAULT 'open',\n  closed_at DATETIME NULL,\n  closed_by_user_id INT UNSIGNED NULL,\n  close_reason_type VARCHAR(32) NOT NULL DEFAULT 'daily_close',\n  close_reason TEXT NULL,\n  unlocked_at DATETIME NULL,\n  unlocked_by_user_id INT UNSIGNED NULL,\n  unlock_reason_type VARCHAR(32) NULL,\n  unlock_reason TEXT NULL,\n  locked_scopes_json LONGTEXT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  CONSTRAINT fk_dinecore_business_closings_closed_by\n    FOREIGN KEY (closed_by_user_id) REFERENCES users(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_business_closings_unlocked_by\n    FOREIGN KEY (unlocked_by_user_id) REFERENCES users(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_business_closings",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 61,
+        "ddl": "CREATE TABLE `dinecore_business_closings` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `business_date` date NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'open',\n  `closed_at` datetime DEFAULT NULL,\n  `closed_by_user_id` int(10) unsigned DEFAULT NULL,\n  `close_reason_type` varchar(32) NOT NULL DEFAULT 'daily_close',\n  `close_reason` text DEFAULT NULL,\n  `unlocked_at` datetime DEFAULT NULL,\n  `unlocked_by_user_id` int(10) unsigned DEFAULT NULL,\n  `unlock_reason_type` varchar(32) DEFAULT NULL,\n  `unlock_reason` text DEFAULT NULL,\n  `locked_scopes_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `business_date` (`business_date`),\n  KEY `fk_dinecore_business_closings_closed_by` (`closed_by_user_id`),\n  KEY `fk_dinecore_business_closings_unlocked_by` (`unlocked_by_user_id`),\n  CONSTRAINT `fk_dinecore_business_closings_closed_by` FOREIGN KEY (`closed_by_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_business_closings_unlocked_by` FOREIGN KEY (`unlocked_by_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_business_closings",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 30,
+        "ddl": "CREATE TABLE `dinecore_business_closings` (\n  `id` int UNSIGNED NOT NULL,\n  `business_date` date NOT NULL,\n  `status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'open',\n  `closed_at` datetime DEFAULT NULL,\n  `closed_by_user_id` int UNSIGNED DEFAULT NULL,\n  `close_reason_type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'daily_close',\n  `close_reason` text COLLATE utf8mb4_unicode_ci,\n  `unlocked_at` datetime DEFAULT NULL,\n  `unlocked_by_user_id` int UNSIGNED DEFAULT NULL,\n  `unlock_reason_type` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `unlock_reason` text COLLATE utf8mb4_unicode_ci,\n  `locked_scopes_json` longtext COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-032",
+      "API-033",
+      "API-035",
+      "API-071",
+      "API-073",
+      "API-074"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_cart_items",
+    "declarations": [
+      {
+        "table": "dinecore_cart_items",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 101,
+        "ddl": "CREATE TABLE `dinecore_cart_items` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `batch_id` int(10) unsigned NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `cart_id` varchar(64) NOT NULL,\n  `menu_item_id` varchar(128) NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `quantity` int(11) NOT NULL DEFAULT 1,\n  `price` int(11) NOT NULL DEFAULT 0,\n  `note` text DEFAULT NULL,\n  `options_json` longtext DEFAULT NULL,\n  `selected_option_ids_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_cart_items_order_cart` (`order_id`,`cart_id`),\n  KEY `fk_dinecore_cart_items_table` (`table_code`),\n  KEY `fk_dinecore_cart_items_menu_item` (`menu_item_id`),\n  KEY `idx_dinecore_cart_items_batch_cart` (`batch_id`,`cart_id`),\n  CONSTRAINT `fk_dinecore_cart_items_batch` FOREIGN KEY (`batch_id`) REFERENCES `dinecore_order_batches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_cart_items_menu_item` FOREIGN KEY (`menu_item_id`) REFERENCES `dinecore_menu_items` (`id`) ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_cart_items_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_cart_items_table` FOREIGN KEY (`table_code`) REFERENCES `dinecore_tables` (`code`) ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_cart_items",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 101,
+        "ddl": "CREATE TABLE `dinecore_cart_items` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `batch_id` int(10) unsigned NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `cart_id` varchar(64) NOT NULL,\n  `menu_item_id` varchar(128) NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `quantity` int(11) NOT NULL DEFAULT 1,\n  `price` int(11) NOT NULL DEFAULT 0,\n  `note` text DEFAULT NULL,\n  `options_json` longtext DEFAULT NULL,\n  `selected_option_ids_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_cart_items_order_cart` (`order_id`,`cart_id`),\n  KEY `fk_dinecore_cart_items_table` (`table_code`),\n  KEY `fk_dinecore_cart_items_menu_item` (`menu_item_id`),\n  KEY `idx_dinecore_cart_items_batch_cart` (`batch_id`,`cart_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_cart_items",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 107,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_cart_items (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  order_id INT UNSIGNED NOT NULL,\n  batch_id INT UNSIGNED NOT NULL,\n  table_code VARCHAR(32) NOT NULL,\n  cart_id VARCHAR(64) NOT NULL,\n  menu_item_id VARCHAR(128) NOT NULL,\n  title VARCHAR(128) NOT NULL,\n  quantity INT NOT NULL DEFAULT 1,\n  price INT NOT NULL DEFAULT 0,\n  note TEXT NULL,\n  options_json LONGTEXT NULL,\n  selected_option_ids_json LONGTEXT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX idx_dinecore_cart_items_batch_cart (batch_id, cart_id),\n  INDEX idx_dinecore_cart_items_order_cart (order_id, cart_id),\n  CONSTRAINT fk_dinecore_cart_items_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_cart_items_batch\n    FOREIGN KEY (batch_id) REFERENCES dinecore_order_batches(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_cart_items_table\n    FOREIGN KEY (table_code) REFERENCES dinecore_tables(code)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_cart_items_menu_item\n    FOREIGN KEY (menu_item_id) REFERENCES dinecore_menu_items(id)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_cart_items",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 101,
+        "ddl": "CREATE TABLE `dinecore_cart_items` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `batch_id` int(10) unsigned NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `cart_id` varchar(64) NOT NULL,\n  `menu_item_id` varchar(128) NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `quantity` int(11) NOT NULL DEFAULT 1,\n  `price` int(11) NOT NULL DEFAULT 0,\n  `note` text DEFAULT NULL,\n  `options_json` longtext DEFAULT NULL,\n  `selected_option_ids_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_cart_items_order_cart` (`order_id`,`cart_id`),\n  KEY `fk_dinecore_cart_items_table` (`table_code`),\n  KEY `fk_dinecore_cart_items_menu_item` (`menu_item_id`),\n  KEY `idx_dinecore_cart_items_batch_cart` (`batch_id`,`cart_id`),\n  CONSTRAINT `fk_dinecore_cart_items_batch` FOREIGN KEY (`batch_id`) REFERENCES `dinecore_order_batches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_cart_items_menu_item` FOREIGN KEY (`menu_item_id`) REFERENCES `dinecore_menu_items` (`id`) ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_cart_items_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_cart_items_table` FOREIGN KEY (`table_code`) REFERENCES `dinecore_tables` (`code`) ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_cart_items",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 74,
+        "ddl": "CREATE TABLE `dinecore_cart_items` (\n  `id` int UNSIGNED NOT NULL,\n  `order_id` int UNSIGNED NOT NULL,\n  `batch_id` int UNSIGNED NOT NULL,\n  `table_code` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `cart_id` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `menu_item_id` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `quantity` int NOT NULL DEFAULT '1',\n  `price` int NOT NULL DEFAULT '0',\n  `note` text COLLATE utf8mb4_unicode_ci,\n  `options_json` longtext COLLATE utf8mb4_unicode_ci,\n  `selected_option_ids_json` longtext COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-004",
+      "API-010",
+      "API-011",
+      "API-012",
+      "API-029",
+      "API-031",
+      "API-034",
+      "API-036",
+      "API-037"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_checkout_submissions",
+    "declarations": [
+      {
+        "table": "dinecore_checkout_submissions",
+        "file": "platform/backend/sql/dinecore/006_dinecore_checkout_submission_merge_cleanup.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_checkout_submissions (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  session_token VARCHAR(128) NOT NULL,\n  client_submission_id VARCHAR(128) NOT NULL,\n  table_code VARCHAR(32) NOT NULL,\n  order_id INT UNSIGNED NULL,\n  submitted_batch_id INT UNSIGNED NULL,\n  submitted_batch_no INT NULL,\n  status VARCHAR(32) NOT NULL DEFAULT 'processing',\n  response_json LONGTEXT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  UNIQUE KEY ux_dinecore_checkout_submissions_session_client (session_token, client_submission_id),\n  INDEX idx_dinecore_checkout_submissions_table (table_code, created_at),\n  CONSTRAINT fk_dinecore_checkout_submissions_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_checkout_submissions_batch\n    FOREIGN KEY (submitted_batch_id) REFERENCES dinecore_order_batches(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_checkout_submissions_table\n    FOREIGN KEY (table_code) REFERENCES dinecore_tables(code)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_checkout_submissions",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 109,
+        "ddl": "CREATE TABLE `dinecore_checkout_submissions` (\n  `id` int UNSIGNED NOT NULL,\n  `session_token` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `client_submission_id` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `table_code` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `order_id` int UNSIGNED DEFAULT NULL,\n  `submitted_batch_id` int UNSIGNED DEFAULT NULL,\n  `submitted_batch_no` int DEFAULT NULL,\n  `status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'processing',\n  `response_json` longtext COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-011"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_guest_sessions",
+    "declarations": [
+      {
+        "table": "dinecore_guest_sessions",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 144,
+        "ddl": "CREATE TABLE `dinecore_guest_sessions` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `session_token` varchar(128) NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `order_id` int(10) unsigned NOT NULL,\n  `person_slot` int(11) NOT NULL,\n  `cart_id` varchar(64) NOT NULL,\n  `display_label` varchar(64) NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'active',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `last_seen_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `session_token` (`session_token`),\n  KEY `idx_dinecore_guest_sessions_order` (`order_id`),\n  KEY `idx_dinecore_guest_sessions_table` (`table_code`),\n  CONSTRAINT `fk_dinecore_guest_sessions_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_guest_sessions_table` FOREIGN KEY (`table_code`) REFERENCES `dinecore_tables` (`code`) ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_guest_sessions",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 140,
+        "ddl": "CREATE TABLE `dinecore_guest_sessions` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `session_token` varchar(128) NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `order_id` int(10) unsigned NOT NULL,\n  `person_slot` int(11) NOT NULL,\n  `cart_id` varchar(64) NOT NULL,\n  `display_label` varchar(64) NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'active',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `last_seen_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `session_token` (`session_token`),\n  KEY `idx_dinecore_guest_sessions_order` (`order_id`),\n  KEY `idx_dinecore_guest_sessions_table` (`table_code`)\n) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_guest_sessions",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 84,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_guest_sessions (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  session_token VARCHAR(128) NOT NULL UNIQUE,\n  table_code VARCHAR(32) NOT NULL,\n  order_id INT UNSIGNED NOT NULL,\n  person_slot INT NOT NULL,\n  cart_id VARCHAR(64) NOT NULL,\n  display_label VARCHAR(64) NOT NULL,\n  status VARCHAR(32) NOT NULL DEFAULT 'active',\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  last_seen_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  INDEX idx_dinecore_guest_sessions_order (order_id),\n  INDEX idx_dinecore_guest_sessions_table (table_code),\n  CONSTRAINT fk_dinecore_guest_sessions_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_guest_sessions_table\n    FOREIGN KEY (table_code) REFERENCES dinecore_tables(code)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_guest_sessions",
+        "file": "platform/backend/sql/dinecore/008_dinecore_guest_sessions_b1.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_guest_sessions (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  session_token VARCHAR(128) NOT NULL UNIQUE,\n  table_code VARCHAR(32) NOT NULL,\n  order_id INT UNSIGNED NULL,\n  person_slot INT NOT NULL,\n  cart_id VARCHAR(64) NOT NULL,\n  display_label VARCHAR(64) NOT NULL,\n  status VARCHAR(32) NOT NULL DEFAULT 'active',\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  last_seen_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  INDEX idx_dinecore_guest_sessions_order (order_id),\n  INDEX idx_dinecore_guest_sessions_table (table_code),\n  INDEX idx_dinecore_guest_sessions_table_status (table_code, status, last_seen_at),\n  CONSTRAINT fk_dinecore_guest_sessions_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_guest_sessions_table\n    FOREIGN KEY (table_code) REFERENCES dinecore_tables(code)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_guest_sessions",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 137,
+        "ddl": "CREATE TABLE `dinecore_guest_sessions` (\n  `id` int UNSIGNED NOT NULL,\n  `session_token` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `table_code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `order_id` int UNSIGNED DEFAULT NULL,\n  `person_slot` int NOT NULL,\n  `cart_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `display_label` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `status` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `last_seen_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-002",
+      "API-003",
+      "API-004",
+      "API-010",
+      "API-011",
+      "API-012",
+      "API-028",
+      "API-029",
+      "API-031",
+      "API-033",
+      "API-065",
+      "API-066",
+      "API-067",
+      "API-068",
+      "API-069",
+      "API-070"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_housekeeping_jobs",
+    "declarations": [
+      {
+        "table": "dinecore_housekeeping_jobs",
+        "file": "platform/backend/sql/dinecore/006_dinecore_checkout_submission_merge_cleanup.sql",
+        "line": 29,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_housekeeping_jobs (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  job_key VARCHAR(64) NOT NULL UNIQUE,\n  last_run_at DATETIME NULL,\n  locked_until DATETIME NULL,\n  meta_json LONGTEXT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n);"
+      },
+      {
+        "table": "dinecore_housekeeping_jobs",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 168,
+        "ddl": "CREATE TABLE `dinecore_housekeeping_jobs` (\n  `id` int UNSIGNED NOT NULL,\n  `job_key` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `last_run_at` datetime DEFAULT NULL,\n  `locked_until` datetime DEFAULT NULL,\n  `meta_json` longtext COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-002",
+      "API-003",
+      "API-011"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_menu_categories",
+    "declarations": [
+      {
+        "table": "dinecore_menu_categories",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 182,
+        "ddl": "CREATE TABLE `dinecore_menu_categories` (\n  `id` varchar(64) NOT NULL,\n  `name` varchar(64) NOT NULL,\n  `sort_order` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_menu_categories",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 176,
+        "ddl": "CREATE TABLE `dinecore_menu_categories` (\n  `id` varchar(64) NOT NULL,\n  `name` varchar(64) NOT NULL,\n  `sort_order` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_menu_categories",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 14,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_menu_categories (\n  id VARCHAR(64) NOT NULL PRIMARY KEY,\n  name VARCHAR(64) NOT NULL,\n  sort_order INT NOT NULL DEFAULT 0,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n);"
+      },
+      {
+        "table": "dinecore_menu_categories",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 145,
+        "ddl": "CREATE TABLE `dinecore_menu_categories` (\n  `id` varchar(64) NOT NULL,\n  `name` varchar(64) NOT NULL,\n  `sort_order` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_menu_categories",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 191,
+        "ddl": "CREATE TABLE `dinecore_menu_categories` (\n  `id` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `sort_order` int NOT NULL DEFAULT '0',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-003",
+      "API-039",
+      "API-040",
+      "API-041",
+      "API-042",
+      "API-043",
+      "API-044",
+      "API-045",
+      "API-046",
+      "API-047",
+      "API-048",
+      "API-049",
+      "API-050",
+      "API-051",
+      "API-052",
+      "API-053",
+      "API-054",
+      "API-055",
+      "API-056"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_menu_items",
+    "declarations": [
+      {
+        "table": "dinecore_menu_items",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 213,
+        "ddl": "CREATE TABLE `dinecore_menu_items` (\n  `id` varchar(128) NOT NULL,\n  `category_id` varchar(64) NOT NULL,\n  `name` varchar(128) NOT NULL,\n  `description` text DEFAULT NULL,\n  `base_price` int(11) NOT NULL DEFAULT 0,\n  `image_url` varchar(255) NOT NULL DEFAULT '',\n  `sold_out` tinyint(1) NOT NULL DEFAULT 0,\n  `hidden` tinyint(1) NOT NULL DEFAULT 0,\n  `badge` varchar(64) NOT NULL DEFAULT '',\n  `tone` varchar(32) NOT NULL DEFAULT '',\n  `tags_json` longtext DEFAULT NULL,\n  `default_note` text DEFAULT NULL,\n  `default_option_ids_json` longtext DEFAULT NULL,\n  `option_groups_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `fk_dinecore_menu_items_category` (`category_id`),\n  CONSTRAINT `fk_dinecore_menu_items_category` FOREIGN KEY (`category_id`) REFERENCES `dinecore_menu_categories` (`id`) ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_menu_items",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 207,
+        "ddl": "CREATE TABLE `dinecore_menu_items` (\n  `id` varchar(128) NOT NULL,\n  `category_id` varchar(64) NOT NULL,\n  `name` varchar(128) NOT NULL,\n  `description` text DEFAULT NULL,\n  `base_price` int(11) NOT NULL DEFAULT 0,\n  `image_url` varchar(255) NOT NULL DEFAULT '',\n  `sold_out` tinyint(1) NOT NULL DEFAULT 0,\n  `hidden` tinyint(1) NOT NULL DEFAULT 0,\n  `badge` varchar(64) NOT NULL DEFAULT '',\n  `tone` varchar(32) NOT NULL DEFAULT '',\n  `tags_json` longtext DEFAULT NULL,\n  `default_note` text DEFAULT NULL,\n  `default_option_ids_json` longtext DEFAULT NULL,\n  `option_groups_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `fk_dinecore_menu_items_category` (`category_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_menu_items",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 22,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_menu_items (\n  id VARCHAR(128) NOT NULL PRIMARY KEY,\n  category_id VARCHAR(64) NOT NULL,\n  name VARCHAR(128) NOT NULL,\n  description TEXT NULL,\n  base_price INT NOT NULL DEFAULT 0,\n  image_url VARCHAR(255) NOT NULL DEFAULT '',\n  sold_out TINYINT(1) NOT NULL DEFAULT 0,\n  hidden TINYINT(1) NOT NULL DEFAULT 0,\n  badge VARCHAR(64) NOT NULL DEFAULT '',\n  tone VARCHAR(32) NOT NULL DEFAULT '',\n  tags_json LONGTEXT NULL,\n  default_note TEXT NULL,\n  default_option_ids_json LONGTEXT NULL,\n  option_groups_json LONGTEXT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  CONSTRAINT fk_dinecore_menu_items_category\n    FOREIGN KEY (category_id) REFERENCES dinecore_menu_categories(id)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_menu_items",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 172,
+        "ddl": "CREATE TABLE `dinecore_menu_items` (\n  `id` varchar(128) NOT NULL,\n  `category_id` varchar(64) NOT NULL,\n  `name` varchar(128) NOT NULL,\n  `description` text DEFAULT NULL,\n  `base_price` int(11) NOT NULL DEFAULT 0,\n  `image_url` varchar(255) NOT NULL DEFAULT '',\n  `sold_out` tinyint(1) NOT NULL DEFAULT 0,\n  `hidden` tinyint(1) NOT NULL DEFAULT 0,\n  `badge` varchar(64) NOT NULL DEFAULT '',\n  `tone` varchar(32) NOT NULL DEFAULT '',\n  `tags_json` longtext DEFAULT NULL,\n  `default_note` text DEFAULT NULL,\n  `default_option_ids_json` longtext DEFAULT NULL,\n  `option_groups_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `fk_dinecore_menu_items_category` (`category_id`),\n  CONSTRAINT `fk_dinecore_menu_items_category` FOREIGN KEY (`category_id`) REFERENCES `dinecore_menu_categories` (`id`) ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_menu_items",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 216,
+        "ddl": "CREATE TABLE `dinecore_menu_items` (\n  `id` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `category_id` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `description` text COLLATE utf8mb4_unicode_ci,\n  `base_price` int NOT NULL DEFAULT '0',\n  `image_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `sold_out` tinyint(1) NOT NULL DEFAULT '0',\n  `hidden` tinyint(1) NOT NULL DEFAULT '0',\n  `badge` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `tone` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `tags_json` longtext COLLATE utf8mb4_unicode_ci,\n  `default_note` text COLLATE utf8mb4_unicode_ci,\n  `default_option_ids_json` longtext COLLATE utf8mb4_unicode_ci,\n  `option_groups_json` longtext COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-003",
+      "API-004",
+      "API-011",
+      "API-039",
+      "API-040",
+      "API-041",
+      "API-042",
+      "API-043",
+      "API-044",
+      "API-045",
+      "API-046",
+      "API-047",
+      "API-048",
+      "API-049",
+      "API-050",
+      "API-051",
+      "API-052",
+      "API-053",
+      "API-054",
+      "API-055",
+      "API-056"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_order_batches",
+    "declarations": [
+      {
+        "table": "dinecore_order_batches",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 256,
+        "ddl": "CREATE TABLE `dinecore_order_batches` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `batch_no` int(11) NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'draft',\n  `source_session_token` varchar(128) DEFAULT NULL,\n  `submitted_at` datetime DEFAULT NULL,\n  `locked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ux_dinecore_order_batches_order_batch_no` (`order_id`,`batch_no`),\n  KEY `idx_dinecore_order_batches_order_status` (`order_id`,`status`),\n  CONSTRAINT `fk_dinecore_order_batches_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_order_batches",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 249,
+        "ddl": "CREATE TABLE `dinecore_order_batches` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `batch_no` int(11) NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'draft',\n  `source_session_token` varchar(128) DEFAULT NULL,\n  `submitted_at` datetime DEFAULT NULL,\n  `locked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ux_dinecore_order_batches_order_batch_no` (`order_id`,`batch_no`),\n  KEY `idx_dinecore_order_batches_order_status` (`order_id`,`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_order_batches",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 66,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_order_batches (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  order_id INT UNSIGNED NOT NULL,\n  batch_no INT NOT NULL,\n  status VARCHAR(32) NOT NULL DEFAULT 'draft',\n  source_session_token VARCHAR(128) NULL,\n  submitted_at DATETIME NULL,\n  locked_at DATETIME NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  UNIQUE KEY ux_dinecore_order_batches_order_batch_no (order_id, batch_no),\n  INDEX idx_dinecore_order_batches_order_status (order_id, status),\n  CONSTRAINT fk_dinecore_order_batches_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_order_batches",
+        "file": "platform/backend/sql/dinecore/004_dinecore_phase_a_batch_schema.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_order_batches (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  order_id INT UNSIGNED NOT NULL,\n  batch_no INT NOT NULL,\n  status VARCHAR(32) NOT NULL DEFAULT 'draft',\n  source_session_token VARCHAR(128) NULL,\n  submitted_at DATETIME NULL,\n  locked_at DATETIME NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  UNIQUE KEY ux_dinecore_order_batches_order_batch_no (order_id, batch_no),\n  INDEX idx_dinecore_order_batches_order_status (order_id, status),\n  CONSTRAINT fk_dinecore_order_batches_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_order_batches",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 212,
+        "ddl": "CREATE TABLE `dinecore_order_batches` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `batch_no` int(11) NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'draft',\n  `source_session_token` varchar(128) DEFAULT NULL,\n  `submitted_at` datetime DEFAULT NULL,\n  `locked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ux_dinecore_order_batches_order_batch_no` (`order_id`,`batch_no`),\n  KEY `idx_dinecore_order_batches_order_status` (`order_id`,`status`),\n  CONSTRAINT `fk_dinecore_order_batches_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_order_batches",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 321,
+        "ddl": "CREATE TABLE `dinecore_order_batches` (\n  `id` int UNSIGNED NOT NULL,\n  `order_id` int UNSIGNED NOT NULL,\n  `batch_no` int NOT NULL,\n  `status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',\n  `source_session_token` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `submitted_at` datetime DEFAULT NULL,\n  `locked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-002",
+      "API-004",
+      "API-010",
+      "API-011",
+      "API-012",
+      "API-014",
+      "API-015",
+      "API-016",
+      "API-017",
+      "API-018",
+      "API-025",
+      "API-026",
+      "API-027",
+      "API-028",
+      "API-029",
+      "API-030",
+      "API-031",
+      "API-032",
+      "API-034",
+      "API-035",
+      "API-036",
+      "API-037",
+      "API-071",
+      "API-073"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_order_merge_records",
+    "declarations": [
+      {
+        "table": "dinecore_order_merge_records",
+        "file": "platform/backend/sql/dinecore/006_dinecore_checkout_submission_merge_cleanup.sql",
+        "line": 39,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_order_merge_records (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  target_order_id INT UNSIGNED NOT NULL,\n  merged_order_id INT UNSIGNED NOT NULL,\n  table_code VARCHAR(32) NOT NULL,\n  merged_by_user_id INT UNSIGNED NULL,\n  reason VARCHAR(255) NOT NULL DEFAULT '',\n  snapshot_json LONGTEXT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  UNIQUE KEY ux_dinecore_order_merge_records_pair (target_order_id, merged_order_id),\n  INDEX idx_dinecore_order_merge_records_table (table_code, created_at),\n  CONSTRAINT fk_dinecore_order_merge_target\n    FOREIGN KEY (target_order_id) REFERENCES dinecore_orders(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_order_merge_merged\n    FOREIGN KEY (merged_order_id) REFERENCES dinecore_orders(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_order_merge_table\n    FOREIGN KEY (table_code) REFERENCES dinecore_tables(code)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_order_merge_user\n    FOREIGN KEY (merged_by_user_id) REFERENCES users(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_order_merge_records",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 358,
+        "ddl": "CREATE TABLE `dinecore_order_merge_records` (\n  `id` int UNSIGNED NOT NULL,\n  `target_order_id` int UNSIGNED NOT NULL,\n  `merged_order_id` int UNSIGNED NOT NULL,\n  `table_code` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `merged_by_user_id` int UNSIGNED DEFAULT NULL,\n  `reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `snapshot_json` longtext COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-031"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_order_timeline",
+    "declarations": [
+      {
+        "table": "dinecore_order_timeline",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 290,
+        "ddl": "CREATE TABLE `dinecore_order_timeline` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `status` varchar(32) NOT NULL,\n  `source` varchar(32) NOT NULL DEFAULT 'system',\n  `note` varchar(255) NOT NULL DEFAULT '',\n  `changed_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_order_timeline_order` (`order_id`),\n  CONSTRAINT `fk_dinecore_order_timeline_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_order_timeline",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 282,
+        "ddl": "CREATE TABLE `dinecore_order_timeline` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `status` varchar(32) NOT NULL,\n  `source` varchar(32) NOT NULL DEFAULT 'system',\n  `note` varchar(255) NOT NULL DEFAULT '',\n  `changed_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_order_timeline_order` (`order_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_order_timeline",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 142,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_order_timeline (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  order_id INT UNSIGNED NOT NULL,\n  status VARCHAR(32) NOT NULL,\n  source VARCHAR(32) NOT NULL DEFAULT 'system',\n  note VARCHAR(255) NOT NULL DEFAULT '',\n  changed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  INDEX idx_dinecore_order_timeline_order (order_id),\n  CONSTRAINT fk_dinecore_order_timeline_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_order_timeline",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 246,
+        "ddl": "CREATE TABLE `dinecore_order_timeline` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_id` int(10) unsigned NOT NULL,\n  `status` varchar(32) NOT NULL,\n  `source` varchar(32) NOT NULL DEFAULT 'system',\n  `note` varchar(255) NOT NULL DEFAULT '',\n  `changed_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_dinecore_order_timeline_order` (`order_id`),\n  CONSTRAINT `fk_dinecore_order_timeline_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_order_timeline",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 375,
+        "ddl": "CREATE TABLE `dinecore_order_timeline` (\n  `id` int UNSIGNED NOT NULL,\n  `order_id` int UNSIGNED NOT NULL,\n  `status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `source` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'system',\n  `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `changed_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-011",
+      "API-029",
+      "API-031",
+      "API-032",
+      "API-033",
+      "API-035",
+      "API-037"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_orders",
+    "declarations": [
+      {
+        "table": "dinecore_orders",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 319,
+        "ddl": "CREATE TABLE `dinecore_orders` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_no` varchar(32) NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `order_status` varchar(32) NOT NULL DEFAULT 'draft',\n  `payment_status` varchar(32) NOT NULL DEFAULT 'unpaid',\n  `payment_method` varchar(32) NOT NULL DEFAULT 'unpaid',\n  `estimated_wait_minutes` int(11) DEFAULT NULL,\n  `subtotal_amount` int(11) NOT NULL DEFAULT 0,\n  `service_fee_amount` int(11) NOT NULL DEFAULT 0,\n  `tax_amount` int(11) NOT NULL DEFAULT 0,\n  `total_amount` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `order_no` (`order_no`),\n  KEY `idx_dinecore_orders_table_code` (`table_code`),\n  CONSTRAINT `fk_dinecore_orders_table` FOREIGN KEY (`table_code`) REFERENCES `dinecore_tables` (`code`) ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_orders",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 310,
+        "ddl": "CREATE TABLE `dinecore_orders` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_no` varchar(32) NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `order_status` varchar(32) NOT NULL DEFAULT 'draft',\n  `payment_status` varchar(32) NOT NULL DEFAULT 'unpaid',\n  `payment_method` varchar(32) NOT NULL DEFAULT 'unpaid',\n  `estimated_wait_minutes` int(11) DEFAULT NULL,\n  `subtotal_amount` int(11) NOT NULL DEFAULT 0,\n  `service_fee_amount` int(11) NOT NULL DEFAULT 0,\n  `tax_amount` int(11) NOT NULL DEFAULT 0,\n  `total_amount` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `order_no` (`order_no`),\n  KEY `idx_dinecore_orders_table_code` (`table_code`)\n) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_orders",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 45,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_orders (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  order_no VARCHAR(32) NOT NULL UNIQUE,\n  table_code VARCHAR(32) NOT NULL,\n  order_status VARCHAR(32) NOT NULL DEFAULT 'draft',\n  payment_status VARCHAR(32) NOT NULL DEFAULT 'unpaid',\n  payment_method VARCHAR(32) NOT NULL DEFAULT 'unpaid',\n  estimated_wait_minutes INT NULL,\n  subtotal_amount INT NOT NULL DEFAULT 0,\n  service_fee_amount INT NOT NULL DEFAULT 0,\n  tax_amount INT NOT NULL DEFAULT 0,\n  total_amount INT NOT NULL DEFAULT 0,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX idx_dinecore_orders_table_code (table_code),\n  CONSTRAINT fk_dinecore_orders_table\n    FOREIGN KEY (table_code) REFERENCES dinecore_tables(code)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_orders",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 276,
+        "ddl": "CREATE TABLE `dinecore_orders` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `order_no` varchar(32) NOT NULL,\n  `table_code` varchar(32) NOT NULL,\n  `order_status` varchar(32) NOT NULL DEFAULT 'draft',\n  `payment_status` varchar(32) NOT NULL DEFAULT 'unpaid',\n  `payment_method` varchar(32) NOT NULL DEFAULT 'unpaid',\n  `estimated_wait_minutes` int(11) DEFAULT NULL,\n  `subtotal_amount` int(11) NOT NULL DEFAULT 0,\n  `service_fee_amount` int(11) NOT NULL DEFAULT 0,\n  `tax_amount` int(11) NOT NULL DEFAULT 0,\n  `total_amount` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `order_no` (`order_no`),\n  KEY `idx_dinecore_orders_table_code` (`table_code`),\n  CONSTRAINT `fk_dinecore_orders_table` FOREIGN KEY (`table_code`) REFERENCES `dinecore_tables` (`code`) ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_orders",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 285,
+        "ddl": "CREATE TABLE `dinecore_orders` (\n  `id` int UNSIGNED NOT NULL,\n  `order_no` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `table_code` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `order_status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',\n  `payment_status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',\n  `payment_method` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',\n  `estimated_wait_minutes` int DEFAULT NULL,\n  `subtotal_amount` int NOT NULL DEFAULT '0',\n  `service_fee_amount` int NOT NULL DEFAULT '0',\n  `tax_amount` int NOT NULL DEFAULT '0',\n  `total_amount` int NOT NULL DEFAULT '0',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-002",
+      "API-003",
+      "API-004",
+      "API-010",
+      "API-011",
+      "API-012",
+      "API-014",
+      "API-015",
+      "API-016",
+      "API-017",
+      "API-018",
+      "API-025",
+      "API-026",
+      "API-027",
+      "API-028",
+      "API-029",
+      "API-030",
+      "API-031",
+      "API-032",
+      "API-033",
+      "API-034",
+      "API-035",
+      "API-036",
+      "API-037",
+      "API-071",
+      "API-073"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_staff_profiles",
+    "declarations": [
+      {
+        "table": "dinecore_staff_profiles",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 357,
+        "ddl": "CREATE TABLE `dinecore_staff_profiles` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `role` varchar(32) NOT NULL,\n  `display_name` varchar(64) NOT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT 1,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `user_id` (`user_id`),\n  CONSTRAINT `fk_dinecore_staff_profiles_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_staff_profiles",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 347,
+        "ddl": "CREATE TABLE `dinecore_staff_profiles` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `role` varchar(32) NOT NULL,\n  `display_name` varchar(64) NOT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT 1,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `user_id` (`user_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_staff_profiles",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 156,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_staff_profiles (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  user_id INT UNSIGNED NOT NULL UNIQUE,\n  role VARCHAR(32) NOT NULL,\n  display_name VARCHAR(64) NOT NULL,\n  status TINYINT(1) NOT NULL DEFAULT 1,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  CONSTRAINT fk_dinecore_staff_profiles_user\n    FOREIGN KEY (user_id) REFERENCES users(id)\n    ON DELETE CASCADE\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_staff_profiles",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 314,
+        "ddl": "CREATE TABLE `dinecore_staff_profiles` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `role` varchar(32) NOT NULL,\n  `display_name` varchar(64) NOT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT 1,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `user_id` (`user_id`),\n  CONSTRAINT `fk_dinecore_staff_profiles_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_staff_profiles",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 409,
+        "ddl": "CREATE TABLE `dinecore_staff_profiles` (\n  `id` int UNSIGNED NOT NULL,\n  `user_id` int UNSIGNED NOT NULL,\n  `role` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `display_name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT '1',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-014",
+      "API-015",
+      "API-016",
+      "API-017",
+      "API-018",
+      "API-019",
+      "API-020",
+      "API-021",
+      "API-022",
+      "API-023",
+      "API-024",
+      "API-025",
+      "API-026",
+      "API-027",
+      "API-028",
+      "API-029",
+      "API-030",
+      "API-031",
+      "API-032",
+      "API-033",
+      "API-034",
+      "API-035",
+      "API-036",
+      "API-037",
+      "API-039",
+      "API-040",
+      "API-041",
+      "API-042",
+      "API-043",
+      "API-044",
+      "API-045",
+      "API-046",
+      "API-047",
+      "API-048",
+      "API-049",
+      "API-050",
+      "API-051",
+      "API-052",
+      "API-053",
+      "API-054",
+      "API-055",
+      "API-056",
+      "API-057",
+      "API-058",
+      "API-059",
+      "API-060",
+      "API-061",
+      "API-062",
+      "API-063",
+      "API-064",
+      "API-065",
+      "API-066",
+      "API-067",
+      "API-068",
+      "API-069",
+      "API-070",
+      "API-071",
+      "API-072",
+      "API-073",
+      "API-074",
+      "API-098",
+      "API-100",
+      "API-101"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_table_sessions",
+    "declarations": [
+      {
+        "table": "dinecore_table_sessions",
+        "file": "platform/backend/sql/dinecore/005_dinecore_table_sessions.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_table_sessions (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  table_code VARCHAR(32) NOT NULL,\n  order_id INT UNSIGNED NULL,\n  status VARCHAR(32) NOT NULL DEFAULT 'closed',\n  started_at DATETIME NULL,\n  closed_at DATETIME NULL,\n  guest_state_json LONGTEXT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  UNIQUE KEY ux_dinecore_table_sessions_table_code (table_code),\n  INDEX idx_dinecore_table_sessions_order_id (order_id),\n  INDEX idx_dinecore_table_sessions_status (status),\n  INDEX idx_dinecore_table_sessions_table_status (table_code, status, id),\n  CONSTRAINT fk_dinecore_table_sessions_table\n    FOREIGN KEY (table_code) REFERENCES dinecore_tables(code)\n    ON DELETE RESTRICT\n    ON UPDATE CASCADE,\n  CONSTRAINT fk_dinecore_table_sessions_order\n    FOREIGN KEY (order_id) REFERENCES dinecore_orders(id)\n    ON DELETE SET NULL\n    ON UPDATE CASCADE\n);"
+      },
+      {
+        "table": "dinecore_table_sessions",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 345,
+        "ddl": "CREATE TABLE `dinecore_table_sessions` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `table_code` varchar(32) NOT NULL,\n  `order_id` int(10) unsigned NOT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'active',\n  `started_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `closed_at` datetime DEFAULT NULL,\n  `guest_state_json` longtext DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  `active_table_code` varchar(32) GENERATED ALWAYS AS (case when `status` = 'active' then `table_code` else NULL end) STORED,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ux_dinecore_table_sessions_active_table` (`active_table_code`),\n  KEY `idx_dinecore_table_sessions_table_code` (`table_code`),\n  KEY `idx_dinecore_table_sessions_order_id` (`order_id`),\n  KEY `idx_dinecore_table_sessions_status` (`status`),\n  CONSTRAINT `fk_dinecore_table_sessions_order` FOREIGN KEY (`order_id`) REFERENCES `dinecore_orders` (`id`) ON UPDATE CASCADE,\n  CONSTRAINT `fk_dinecore_table_sessions_table` FOREIGN KEY (`table_code`) REFERENCES `dinecore_tables` (`code`) ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_table_sessions",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 461,
+        "ddl": "CREATE TABLE `dinecore_table_sessions` (\n  `id` int UNSIGNED NOT NULL,\n  `table_code` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `order_id` int UNSIGNED DEFAULT NULL,\n  `status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'closed',\n  `started_at` datetime DEFAULT NULL,\n  `closed_at` datetime DEFAULT NULL,\n  `guest_state_json` longtext COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-002",
+      "API-003",
+      "API-004",
+      "API-010",
+      "API-011",
+      "API-012",
+      "API-031",
+      "API-033",
+      "API-065",
+      "API-066",
+      "API-067",
+      "API-068",
+      "API-069",
+      "API-070"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "dinecore_tables",
+    "declarations": [
+      {
+        "table": "dinecore_tables",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 391,
+        "ddl": "CREATE TABLE `dinecore_tables` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `code` varchar(32) NOT NULL,\n  `name` varchar(64) NOT NULL,\n  `area_name` varchar(64) NOT NULL DEFAULT '',\n  `dine_mode` varchar(32) NOT NULL DEFAULT 'dine_in',\n  `status` varchar(32) NOT NULL DEFAULT 'active',\n  `is_ordering_enabled` tinyint(1) NOT NULL DEFAULT 1,\n  `sort_order` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `code` (`code`)\n) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_tables",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 380,
+        "ddl": "CREATE TABLE `dinecore_tables` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `code` varchar(32) NOT NULL,\n  `name` varchar(64) NOT NULL,\n  `area_name` varchar(64) NOT NULL DEFAULT '',\n  `dine_mode` varchar(32) NOT NULL DEFAULT 'dine_in',\n  `status` varchar(32) NOT NULL DEFAULT 'active',\n  `is_ordering_enabled` tinyint(1) NOT NULL DEFAULT 1,\n  `sort_order` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `code` (`code`)\n) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_tables",
+        "file": "platform/backend/sql/dinecore/001_dinecore_base.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS dinecore_tables (\n  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  code VARCHAR(32) NOT NULL UNIQUE,\n  name VARCHAR(64) NOT NULL,\n  area_name VARCHAR(64) NOT NULL DEFAULT '',\n  dine_mode VARCHAR(32) NOT NULL DEFAULT 'dine_in',\n  status VARCHAR(32) NOT NULL DEFAULT 'active',\n  is_ordering_enabled TINYINT(1) NOT NULL DEFAULT 1,\n  sort_order INT NOT NULL DEFAULT 0,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n);"
+      },
+      {
+        "table": "dinecore_tables",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 383,
+        "ddl": "CREATE TABLE `dinecore_tables` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `code` varchar(32) NOT NULL,\n  `name` varchar(64) NOT NULL,\n  `area_name` varchar(64) NOT NULL DEFAULT '',\n  `dine_mode` varchar(32) NOT NULL DEFAULT 'dine_in',\n  `status` varchar(32) NOT NULL DEFAULT 'active',\n  `is_ordering_enabled` tinyint(1) NOT NULL DEFAULT 1,\n  `sort_order` int(11) NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `code` (`code`)\n) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "dinecore_tables",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 435,
+        "ddl": "CREATE TABLE `dinecore_tables` (\n  `id` int UNSIGNED NOT NULL,\n  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `area_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `dine_mode` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'dine_in',\n  `status` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',\n  `is_ordering_enabled` tinyint(1) NOT NULL DEFAULT '1',\n  `sort_order` int NOT NULL DEFAULT '0',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-002",
+      "API-003",
+      "API-004",
+      "API-010",
+      "API-011",
+      "API-012",
+      "API-014",
+      "API-015",
+      "API-016",
+      "API-017",
+      "API-018",
+      "API-019",
+      "API-020",
+      "API-025",
+      "API-026",
+      "API-027",
+      "API-057",
+      "API-058",
+      "API-059",
+      "API-060",
+      "API-061",
+      "API-062",
+      "API-063",
+      "API-064"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "flowcenter_announcements",
+    "declarations": [
+      {
+        "table": "flowcenter_announcements",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 424,
+        "ddl": "CREATE TABLE `flowcenter_announcements` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `author_user_id` int(10) unsigned NOT NULL,\n  `title` varchar(180) NOT NULL,\n  `content` text NOT NULL,\n  `published_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_announcements_company` (`company_id`),\n  KEY `idx_flowcenter_announcements_published` (`company_id`,`published_at`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_announcements",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 413,
+        "ddl": "CREATE TABLE `flowcenter_announcements` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `author_user_id` int(10) unsigned NOT NULL,\n  `title` varchar(180) NOT NULL,\n  `content` text NOT NULL,\n  `published_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_announcements_company` (`company_id`),\n  KEY `idx_flowcenter_announcements_published` (`company_id`,`published_at`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_announcements",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 416,
+        "ddl": "CREATE TABLE `flowcenter_announcements` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `author_user_id` int(10) unsigned NOT NULL,\n  `title` varchar(180) NOT NULL,\n  `content` text NOT NULL,\n  `published_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_announcements_company` (`company_id`),\n  KEY `idx_flowcenter_announcements_published` (`company_id`,`published_at`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_announcements",
+        "file": "platform/backend/sql/flowcenter/001_flowcenter_base.sql",
+        "line": 33,
+        "ddl": "CREATE TABLE IF NOT EXISTS flowcenter_announcements (\n    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    company_id VARCHAR(64) NOT NULL,\n    author_user_id INT UNSIGNED NOT NULL,\n    title VARCHAR(180) NOT NULL,\n    content TEXT NOT NULL,\n    published_at DATETIME NULL,\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n    INDEX idx_flowcenter_announcements_company (company_id),\n    INDEX idx_flowcenter_announcements_published (company_id, published_at)\n);"
+      },
+      {
+        "table": "flowcenter_announcements",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 486,
+        "ddl": "CREATE TABLE `flowcenter_announcements` (\n  `id` int UNSIGNED NOT NULL,\n  `company_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `author_user_id` int UNSIGNED NOT NULL,\n  `title` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `published_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-077",
+      "API-078",
+      "API-079",
+      "API-080",
+      "API-081",
+      "API-082"
+    ],
+    "target": "flowCenter 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "flowcenter_approvals",
+    "declarations": [
+      {
+        "table": "flowcenter_approvals",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 458,
+        "ddl": "CREATE TABLE `flowcenter_approvals` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `approver_user_id` int(10) unsigned NOT NULL,\n  `source_type` varchar(32) NOT NULL,\n  `source_id` int(10) unsigned NOT NULL,\n  `decision` varchar(32) NOT NULL,\n  `comment` text DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_approvals_company_source` (`company_id`,`source_type`,`source_id`),\n  KEY `idx_flowcenter_approvals_company_approver` (`company_id`,`approver_user_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_approvals",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 447,
+        "ddl": "CREATE TABLE `flowcenter_approvals` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `approver_user_id` int(10) unsigned NOT NULL,\n  `source_type` varchar(32) NOT NULL,\n  `source_id` int(10) unsigned NOT NULL,\n  `decision` varchar(32) NOT NULL,\n  `comment` text DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_approvals_company_source` (`company_id`,`source_type`,`source_id`),\n  KEY `idx_flowcenter_approvals_company_approver` (`company_id`,`approver_user_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_approvals",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 448,
+        "ddl": "CREATE TABLE `flowcenter_approvals` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `approver_user_id` int(10) unsigned NOT NULL,\n  `source_type` varchar(32) NOT NULL,\n  `source_id` int(10) unsigned NOT NULL,\n  `decision` varchar(32) NOT NULL,\n  `comment` text DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_approvals_company_source` (`company_id`,`source_type`,`source_id`),\n  KEY `idx_flowcenter_approvals_company_approver` (`company_id`,`approver_user_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_approvals",
+        "file": "platform/backend/sql/flowcenter/001_flowcenter_base.sql",
+        "line": 62,
+        "ddl": "CREATE TABLE IF NOT EXISTS flowcenter_approvals (\n    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    company_id VARCHAR(64) NOT NULL,\n    approver_user_id INT UNSIGNED NOT NULL,\n    source_type VARCHAR(32) NOT NULL,\n    source_id INT UNSIGNED NOT NULL,\n    decision VARCHAR(32) NOT NULL,\n    comment TEXT NULL,\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n    INDEX idx_flowcenter_approvals_company_source (company_id, source_type, source_id),\n    INDEX idx_flowcenter_approvals_company_approver (company_id, approver_user_id)\n);"
+      },
+      {
+        "table": "flowcenter_approvals",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 512,
+        "ddl": "CREATE TABLE `flowcenter_approvals` (\n  `id` int UNSIGNED NOT NULL,\n  `company_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `approver_user_id` int UNSIGNED NOT NULL,\n  `source_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `source_id` int UNSIGNED NOT NULL,\n  `decision` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-097"
+    ],
+    "target": "flowCenter 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "flowcenter_leave_requests",
+    "declarations": [
+      {
+        "table": "flowcenter_leave_requests",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 490,
+        "ddl": "CREATE TABLE `flowcenter_leave_requests` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `user_id` int(10) unsigned NOT NULL,\n  `leave_type` varchar(32) NOT NULL,\n  `start_date` date NOT NULL,\n  `end_date` date NOT NULL,\n  `days` decimal(5,2) NOT NULL DEFAULT 1.00,\n  `status` varchar(32) NOT NULL DEFAULT 'submitted',\n  `reason` text DEFAULT NULL,\n  `delegate_name` varchar(100) DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_leave_company_user` (`company_id`,`user_id`),\n  KEY `idx_flowcenter_leave_company_status` (`company_id`,`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_leave_requests",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 479,
+        "ddl": "CREATE TABLE `flowcenter_leave_requests` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `user_id` int(10) unsigned NOT NULL,\n  `leave_type` varchar(32) NOT NULL,\n  `start_date` date NOT NULL,\n  `end_date` date NOT NULL,\n  `days` decimal(5,2) NOT NULL DEFAULT 1.00,\n  `status` varchar(32) NOT NULL DEFAULT 'submitted',\n  `reason` text DEFAULT NULL,\n  `delegate_name` varchar(100) DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_leave_company_user` (`company_id`,`user_id`),\n  KEY `idx_flowcenter_leave_company_status` (`company_id`,`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_leave_requests",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 480,
+        "ddl": "CREATE TABLE `flowcenter_leave_requests` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `user_id` int(10) unsigned NOT NULL,\n  `leave_type` varchar(32) NOT NULL,\n  `start_date` date NOT NULL,\n  `end_date` date NOT NULL,\n  `days` decimal(5,2) NOT NULL DEFAULT 1.00,\n  `status` varchar(32) NOT NULL DEFAULT 'submitted',\n  `reason` text DEFAULT NULL,\n  `delegate_name` varchar(100) DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_leave_company_user` (`company_id`,`user_id`),\n  KEY `idx_flowcenter_leave_company_status` (`company_id`,`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_leave_requests",
+        "file": "platform/backend/sql/flowcenter/001_flowcenter_base.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS flowcenter_leave_requests (\n    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    company_id VARCHAR(64) NOT NULL,\n    user_id INT UNSIGNED NOT NULL,\n    leave_type VARCHAR(32) NOT NULL,\n    start_date DATE NOT NULL,\n    end_date DATE NOT NULL,\n    days DECIMAL(5,2) NOT NULL DEFAULT 1.00,\n    status VARCHAR(32) NOT NULL DEFAULT 'submitted',\n    reason TEXT NULL,\n    delegate_name VARCHAR(100) NULL,\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n    INDEX idx_flowcenter_leave_company_user (company_id, user_id),\n    INDEX idx_flowcenter_leave_company_status (company_id, status)\n);"
+      },
+      {
+        "table": "flowcenter_leave_requests",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 539,
+        "ddl": "CREATE TABLE `flowcenter_leave_requests` (\n  `id` int UNSIGNED NOT NULL,\n  `company_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `user_id` int UNSIGNED NOT NULL,\n  `leave_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `start_date` date NOT NULL,\n  `end_date` date NOT NULL,\n  `days` decimal(5,2) NOT NULL DEFAULT '1.00',\n  `status` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'submitted',\n  `reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,\n  `delegate_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-077",
+      "API-088",
+      "API-089",
+      "API-090",
+      "API-091",
+      "API-096",
+      "API-097"
+    ],
+    "target": "flowCenter 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "flowcenter_purchase_requests",
+    "declarations": [
+      {
+        "table": "flowcenter_purchase_requests",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 528,
+        "ddl": "CREATE TABLE `flowcenter_purchase_requests` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `user_id` int(10) unsigned NOT NULL,\n  `item_name` varchar(150) NOT NULL,\n  `amount` decimal(12,2) NOT NULL DEFAULT 0.00,\n  `purpose` text DEFAULT NULL,\n  `vendor_name` varchar(150) DEFAULT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'submitted',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_purchase_company_user` (`company_id`,`user_id`),\n  KEY `idx_flowcenter_purchase_company_status` (`company_id`,`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_purchase_requests",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 517,
+        "ddl": "CREATE TABLE `flowcenter_purchase_requests` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `user_id` int(10) unsigned NOT NULL,\n  `item_name` varchar(150) NOT NULL,\n  `amount` decimal(12,2) NOT NULL DEFAULT 0.00,\n  `purpose` text DEFAULT NULL,\n  `vendor_name` varchar(150) DEFAULT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'submitted',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_purchase_company_user` (`company_id`,`user_id`),\n  KEY `idx_flowcenter_purchase_company_status` (`company_id`,`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_purchase_requests",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 516,
+        "ddl": "CREATE TABLE `flowcenter_purchase_requests` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `user_id` int(10) unsigned NOT NULL,\n  `item_name` varchar(150) NOT NULL,\n  `amount` decimal(12,2) NOT NULL DEFAULT 0.00,\n  `purpose` text DEFAULT NULL,\n  `vendor_name` varchar(150) DEFAULT NULL,\n  `status` varchar(32) NOT NULL DEFAULT 'submitted',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_purchase_company_user` (`company_id`,`user_id`),\n  KEY `idx_flowcenter_purchase_company_status` (`company_id`,`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_purchase_requests",
+        "file": "platform/backend/sql/flowcenter/001_flowcenter_base.sql",
+        "line": 18,
+        "ddl": "CREATE TABLE IF NOT EXISTS flowcenter_purchase_requests (\n    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    company_id VARCHAR(64) NOT NULL,\n    user_id INT UNSIGNED NOT NULL,\n    item_name VARCHAR(150) NOT NULL,\n    amount DECIMAL(12,2) NOT NULL DEFAULT 0,\n    purpose TEXT NULL,\n    vendor_name VARCHAR(150) NULL,\n    status VARCHAR(32) NOT NULL DEFAULT 'submitted',\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n    INDEX idx_flowcenter_purchase_company_user (company_id, user_id),\n    INDEX idx_flowcenter_purchase_company_status (company_id, status)\n);"
+      },
+      {
+        "table": "flowcenter_purchase_requests",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 571,
+        "ddl": "CREATE TABLE `flowcenter_purchase_requests` (\n  `id` int UNSIGNED NOT NULL,\n  `company_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `user_id` int UNSIGNED NOT NULL,\n  `item_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `amount` decimal(12,2) NOT NULL DEFAULT '0.00',\n  `purpose` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,\n  `vendor_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `status` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'submitted',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-077",
+      "API-092",
+      "API-093",
+      "API-094",
+      "API-095",
+      "API-096",
+      "API-097"
+    ],
+    "target": "flowCenter 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "flowcenter_tasks",
+    "declarations": [
+      {
+        "table": "flowcenter_tasks",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 563,
+        "ddl": "CREATE TABLE `flowcenter_tasks` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `creator_user_id` int(10) unsigned NOT NULL,\n  `assignee_user_id` int(10) unsigned DEFAULT NULL,\n  `title` varchar(180) NOT NULL,\n  `description` text DEFAULT NULL,\n  `priority` varchar(32) NOT NULL DEFAULT 'medium',\n  `status` varchar(32) NOT NULL DEFAULT 'todo',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_tasks_company` (`company_id`),\n  KEY `idx_flowcenter_tasks_company_assignee` (`company_id`,`assignee_user_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_tasks",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 552,
+        "ddl": "CREATE TABLE `flowcenter_tasks` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `creator_user_id` int(10) unsigned NOT NULL,\n  `assignee_user_id` int(10) unsigned DEFAULT NULL,\n  `title` varchar(180) NOT NULL,\n  `description` text DEFAULT NULL,\n  `priority` varchar(32) NOT NULL DEFAULT 'medium',\n  `status` varchar(32) NOT NULL DEFAULT 'todo',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_tasks_company` (`company_id`),\n  KEY `idx_flowcenter_tasks_company_assignee` (`company_id`,`assignee_user_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_tasks",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 550,
+        "ddl": "CREATE TABLE `flowcenter_tasks` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `company_id` varchar(64) NOT NULL,\n  `creator_user_id` int(10) unsigned NOT NULL,\n  `assignee_user_id` int(10) unsigned DEFAULT NULL,\n  `title` varchar(180) NOT NULL,\n  `description` text DEFAULT NULL,\n  `priority` varchar(32) NOT NULL DEFAULT 'medium',\n  `status` varchar(32) NOT NULL DEFAULT 'todo',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_flowcenter_tasks_company` (`company_id`),\n  KEY `idx_flowcenter_tasks_company_assignee` (`company_id`,`assignee_user_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_tasks",
+        "file": "platform/backend/sql/flowcenter/001_flowcenter_base.sql",
+        "line": 46,
+        "ddl": "CREATE TABLE IF NOT EXISTS flowcenter_tasks (\n    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    company_id VARCHAR(64) NOT NULL,\n    creator_user_id INT UNSIGNED NOT NULL,\n    assignee_user_id INT UNSIGNED NULL,\n    title VARCHAR(180) NOT NULL,\n    description TEXT NULL,\n    priority VARCHAR(32) NOT NULL DEFAULT 'medium',\n    status VARCHAR(32) NOT NULL DEFAULT 'todo',\n    due_date DATE NULL,\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n    INDEX idx_flowcenter_tasks_company (company_id),\n    INDEX idx_flowcenter_tasks_company_assignee (company_id, assignee_user_id)\n);"
+      },
+      {
+        "table": "flowcenter_tasks",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 599,
+        "ddl": "CREATE TABLE `flowcenter_tasks` (\n  `id` int UNSIGNED NOT NULL,\n  `company_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `creator_user_id` int UNSIGNED NOT NULL,\n  `assignee_user_id` int UNSIGNED DEFAULT NULL,\n  `title` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,\n  `priority` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'medium',\n  `status` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'todo',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-077",
+      "API-083",
+      "API-084",
+      "API-085",
+      "API-086",
+      "API-087"
+    ],
+    "target": "flowCenter 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "flowcenter_user_profiles",
+    "declarations": [
+      {
+        "table": "flowcenter_user_profiles",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 600,
+        "ddl": "CREATE TABLE `flowcenter_user_profiles` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `company_id` varchar(64) NOT NULL,\n  `role` enum('employee','manager') NOT NULL,\n  `display_name` varchar(100) DEFAULT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT 1,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_flowcenter_profile_user` (`user_id`),\n  KEY `idx_flowcenter_profile_company_role` (`company_id`,`role`),\n  KEY `idx_flowcenter_profile_status` (`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_user_profiles",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 589,
+        "ddl": "CREATE TABLE `flowcenter_user_profiles` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `company_id` varchar(64) NOT NULL,\n  `role` enum('employee','manager') NOT NULL,\n  `display_name` varchar(100) DEFAULT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT 1,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_flowcenter_profile_user` (`user_id`),\n  KEY `idx_flowcenter_profile_company_role` (`company_id`,`role`),\n  KEY `idx_flowcenter_profile_status` (`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_user_profiles",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 585,
+        "ddl": "CREATE TABLE `flowcenter_user_profiles` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `company_id` varchar(64) NOT NULL,\n  `role` enum('employee','manager') NOT NULL,\n  `display_name` varchar(100) DEFAULT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT 1,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_flowcenter_profile_user` (`user_id`),\n  KEY `idx_flowcenter_profile_company_role` (`company_id`,`role`),\n  KEY `idx_flowcenter_profile_status` (`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "flowcenter_user_profiles",
+        "file": "platform/backend/sql/flowcenter/002_flowcenter_auth_context.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS flowcenter_user_profiles (\n    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    user_id INT UNSIGNED NOT NULL,\n    company_id VARCHAR(64) NOT NULL,\n    role ENUM('employee', 'manager') NOT NULL,\n    display_name VARCHAR(100) NULL,\n    status TINYINT(1) NOT NULL DEFAULT 1,\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n    UNIQUE KEY uniq_flowcenter_profile_user (user_id),\n    INDEX idx_flowcenter_profile_company_role (company_id, role),\n    INDEX idx_flowcenter_profile_status (status)\n);"
+      },
+      {
+        "table": "flowcenter_user_profiles",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 629,
+        "ddl": "CREATE TABLE `flowcenter_user_profiles` (\n  `id` int UNSIGNED NOT NULL,\n  `user_id` int UNSIGNED NOT NULL,\n  `company_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `role` enum('employee','manager') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `display_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `status` tinyint(1) NOT NULL DEFAULT '1',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-076",
+      "API-077",
+      "API-078",
+      "API-079",
+      "API-080",
+      "API-081",
+      "API-082",
+      "API-083",
+      "API-084",
+      "API-085",
+      "API-086",
+      "API-087",
+      "API-088",
+      "API-089",
+      "API-090",
+      "API-091",
+      "API-092",
+      "API-093",
+      "API-094",
+      "API-095",
+      "API-096",
+      "API-097",
+      "API-098",
+      "API-100",
+      "API-101"
+    ],
+    "target": "flowCenter 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_employees",
+    "declarations": [
+      {
+        "table": "project_b_employees",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 646,
+        "ddl": "CREATE TABLE `project_b_employees` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `user_id` bigint(20) unsigned DEFAULT NULL,\n  `name` varchar(64) NOT NULL,\n  `title` varchar(64) NOT NULL,\n  `department` varchar(64) NOT NULL,\n  `email` varchar(255) NOT NULL,\n  `phone` varchar(32) NOT NULL,\n  `status` enum('active','inactive') NOT NULL DEFAULT 'active',\n  `role` varchar(32) NOT NULL DEFAULT 'staff',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_employee_member_email` (`member_id`,`email`),\n  KEY `idx_employee_member_id` (`member_id`),\n  KEY `idx_employee_user_id` (`user_id`),\n  KEY `idx_employee_status` (`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_employees",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 635,
+        "ddl": "CREATE TABLE `project_b_employees` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `user_id` bigint(20) unsigned DEFAULT NULL,\n  `name` varchar(64) NOT NULL,\n  `title` varchar(64) NOT NULL,\n  `department` varchar(64) NOT NULL,\n  `email` varchar(255) NOT NULL,\n  `phone` varchar(32) NOT NULL,\n  `status` enum('active','inactive') NOT NULL DEFAULT 'active',\n  `role` varchar(32) NOT NULL DEFAULT 'staff',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_employee_member_email` (`member_id`,`email`),\n  KEY `idx_employee_member_id` (`member_id`),\n  KEY `idx_employee_user_id` (`user_id`),\n  KEY `idx_employee_status` (`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_employees",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 618,
+        "ddl": "CREATE TABLE `project_b_employees` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `user_id` bigint(20) unsigned DEFAULT NULL,\n  `name` varchar(64) NOT NULL,\n  `title` varchar(64) NOT NULL,\n  `department` varchar(64) NOT NULL,\n  `email` varchar(255) NOT NULL,\n  `phone` varchar(32) NOT NULL,\n  `status` enum('active','inactive') NOT NULL DEFAULT 'active',\n  `role` varchar(32) NOT NULL DEFAULT 'staff',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_employee_member_email` (`member_id`,`email`),\n  KEY `idx_employee_member_id` (`member_id`),\n  KEY `idx_employee_user_id` (`user_id`),\n  KEY `idx_employee_status` (`status`)\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_employees",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 662,
+        "ddl": "CREATE TABLE `project_b_employees` (\n  `id` bigint UNSIGNED NOT NULL,\n  `member_id` bigint UNSIGNED NOT NULL,\n  `user_id` bigint UNSIGNED DEFAULT NULL,\n  `name` varchar(64) NOT NULL,\n  `title` varchar(64) NOT NULL,\n  `department` varchar(64) NOT NULL,\n  `email` varchar(255) NOT NULL,\n  `phone` varchar(32) NOT NULL,\n  `status` enum('active','inactive') NOT NULL DEFAULT 'active',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `role` varchar(32) NOT NULL DEFAULT 'staff'\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_employees",
+        "file": "platform/backend/api/project-b/employee/tables.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_employees (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  member_id BIGINT UNSIGNED NOT NULL,\n  user_id BIGINT UNSIGNED NULL,\n  name VARCHAR(64) NOT NULL,\n  title VARCHAR(64) NOT NULL,\n  department VARCHAR(64) NOT NULL,\n  email VARCHAR(255) NOT NULL,\n  phone VARCHAR(32) NOT NULL,\n  status ENUM('active', 'inactive') NOT NULL DEFAULT 'active',\n  role VARCHAR(32) NOT NULL DEFAULT 'staff',\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  UNIQUE KEY uniq_employee_member_email (member_id, email),\n  KEY idx_employee_member_id (member_id),\n  KEY idx_employee_user_id (user_id),\n  KEY idx_employee_status (status)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-098",
+      "API-100",
+      "API-101",
+      "API-102",
+      "API-103",
+      "API-104",
+      "API-105",
+      "API-106",
+      "API-107",
+      "API-108",
+      "API-109",
+      "API-110",
+      "API-112",
+      "API-113",
+      "API-114",
+      "API-115",
+      "API-116"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_notifications",
+    "declarations": [
+      {
+        "table": "project_b_notifications",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 695,
+        "ddl": "CREATE TABLE `project_b_notifications` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `type` varchar(32) NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `content` text NOT NULL,\n  `is_read` tinyint(1) NOT NULL DEFAULT 0,\n  `read_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_notification_member_id` (`member_id`),\n  KEY `idx_notification_is_read` (`is_read`),\n  KEY `idx_notification_created_at` (`created_at`)\n) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_notifications",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 684,
+        "ddl": "CREATE TABLE `project_b_notifications` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `type` varchar(32) NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `content` text NOT NULL,\n  `is_read` tinyint(1) NOT NULL DEFAULT 0,\n  `read_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_notification_member_id` (`member_id`),\n  KEY `idx_notification_is_read` (`is_read`),\n  KEY `idx_notification_created_at` (`created_at`)\n) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_notifications",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 656,
+        "ddl": "CREATE TABLE `project_b_notifications` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `type` varchar(32) NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `content` text NOT NULL,\n  `is_read` tinyint(1) NOT NULL DEFAULT 0,\n  `read_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_notification_member_id` (`member_id`),\n  KEY `idx_notification_is_read` (`is_read`),\n  KEY `idx_notification_created_at` (`created_at`)\n) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_notifications",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 699,
+        "ddl": "CREATE TABLE `project_b_notifications` (\n  `id` bigint UNSIGNED NOT NULL,\n  `member_id` bigint UNSIGNED NOT NULL,\n  `type` varchar(32) NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `content` text NOT NULL,\n  `is_read` tinyint(1) NOT NULL DEFAULT '0',\n  `read_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_notifications",
+        "file": "platform/backend/api/project-b/notification/tables.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_notifications (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  member_id BIGINT UNSIGNED NOT NULL,\n  type VARCHAR(32) NOT NULL,\n  title VARCHAR(128) NOT NULL,\n  content TEXT NOT NULL,\n  is_read TINYINT(1) NOT NULL DEFAULT 0,\n  read_at DATETIME NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  KEY idx_notification_member_id (member_id),\n  KEY idx_notification_is_read (is_read),\n  KEY idx_notification_created_at (created_at)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-103",
+      "API-108",
+      "API-114",
+      "API-118",
+      "API-119",
+      "API-120",
+      "API-121"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_task_events",
+    "declarations": [
+      {
+        "table": "project_b_task_events",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 738,
+        "ddl": "CREATE TABLE `project_b_task_events` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `task_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned DEFAULT NULL,\n  `event_type` enum('system','note') NOT NULL,\n  `content` text NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_task_event_task_id` (`task_id`),\n  KEY `idx_task_event_member_id` (`member_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_task_events",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 727,
+        "ddl": "CREATE TABLE `project_b_task_events` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `task_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned DEFAULT NULL,\n  `event_type` enum('system','note') NOT NULL,\n  `content` text NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_task_event_task_id` (`task_id`),\n  KEY `idx_task_event_member_id` (`member_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_task_events",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 689,
+        "ddl": "CREATE TABLE `project_b_task_events` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `task_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned DEFAULT NULL,\n  `event_type` enum('system','note') NOT NULL,\n  `content` text NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_task_event_task_id` (`task_id`),\n  KEY `idx_task_event_member_id` (`member_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_task_events",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 769,
+        "ddl": "CREATE TABLE `project_b_task_events` (\n  `id` bigint UNSIGNED NOT NULL,\n  `task_id` bigint UNSIGNED NOT NULL,\n  `member_id` bigint UNSIGNED DEFAULT NULL,\n  `event_type` enum('system','note') NOT NULL,\n  `content` text NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_task_events",
+        "file": "platform/backend/api/project-b/task/tables.sql",
+        "line": 31,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_task_events (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  task_id BIGINT UNSIGNED NOT NULL,\n  member_id BIGINT UNSIGNED NULL,\n  event_type ENUM('system', 'note') NOT NULL,\n  content TEXT NOT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  KEY idx_task_event_task_id (task_id),\n  KEY idx_task_event_member_id (member_id)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-107",
+      "API-108",
+      "API-109",
+      "API-110",
+      "API-111"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_task_members",
+    "declarations": [
+      {
+        "table": "project_b_task_members",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 781,
+        "ddl": "CREATE TABLE `project_b_task_members` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `task_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `role` enum('participant','watcher') NOT NULL DEFAULT 'participant',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_task_member` (`task_id`,`member_id`),\n  KEY `idx_task_member_task_id` (`task_id`),\n  KEY `idx_task_member_member_id` (`member_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_task_members",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 770,
+        "ddl": "CREATE TABLE `project_b_task_members` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `task_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `role` enum('participant','watcher') NOT NULL DEFAULT 'participant',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_task_member` (`task_id`,`member_id`),\n  KEY `idx_task_member_task_id` (`task_id`),\n  KEY `idx_task_member_member_id` (`member_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_task_members",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 719,
+        "ddl": "CREATE TABLE `project_b_task_members` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `task_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `role` enum('participant','watcher') NOT NULL DEFAULT 'participant',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_task_member` (`task_id`,`member_id`),\n  KEY `idx_task_member_task_id` (`task_id`),\n  KEY `idx_task_member_member_id` (`member_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_task_members",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 802,
+        "ddl": "CREATE TABLE `project_b_task_members` (\n  `id` bigint UNSIGNED NOT NULL,\n  `task_id` bigint UNSIGNED NOT NULL,\n  `member_id` bigint UNSIGNED NOT NULL,\n  `role` enum('participant','watcher') NOT NULL DEFAULT 'participant',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_task_members",
+        "file": "platform/backend/api/project-b/task/tables.sql",
+        "line": 20,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_task_members (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  task_id BIGINT UNSIGNED NOT NULL,\n  member_id BIGINT UNSIGNED NOT NULL,\n  role ENUM('participant', 'watcher') NOT NULL DEFAULT 'participant',\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  UNIQUE KEY uniq_task_member (task_id, member_id),\n  KEY idx_task_member_task_id (task_id),\n  KEY idx_task_member_member_id (member_id)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-106",
+      "API-107",
+      "API-108",
+      "API-109",
+      "API-110",
+      "API-111"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_tasks",
+    "declarations": [
+      {
+        "table": "project_b_tasks",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 825,
+        "ddl": "CREATE TABLE `project_b_tasks` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `publisher_member_id` bigint(20) unsigned NOT NULL,\n  `assignee_member_id` bigint(20) unsigned DEFAULT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `status` enum('todo','doing','done') NOT NULL DEFAULT 'todo',\n  `priority` enum('low','medium','high') NOT NULL DEFAULT 'medium',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_task_member_id` (`member_id`),\n  KEY `idx_task_publisher_member_id` (`publisher_member_id`),\n  KEY `idx_task_assignee_member_id` (`assignee_member_id`),\n  KEY `idx_task_status` (`status`),\n  KEY `idx_task_due_date` (`due_date`)\n) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_tasks",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 814,
+        "ddl": "CREATE TABLE `project_b_tasks` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `publisher_member_id` bigint(20) unsigned NOT NULL,\n  `assignee_member_id` bigint(20) unsigned DEFAULT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `status` enum('todo','doing','done') NOT NULL DEFAULT 'todo',\n  `priority` enum('low','medium','high') NOT NULL DEFAULT 'medium',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_task_member_id` (`member_id`),\n  KEY `idx_task_publisher_member_id` (`publisher_member_id`),\n  KEY `idx_task_assignee_member_id` (`assignee_member_id`),\n  KEY `idx_task_status` (`status`),\n  KEY `idx_task_due_date` (`due_date`)\n) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_tasks",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 749,
+        "ddl": "CREATE TABLE `project_b_tasks` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `publisher_member_id` bigint(20) unsigned NOT NULL,\n  `assignee_member_id` bigint(20) unsigned DEFAULT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `status` enum('todo','doing','done') NOT NULL DEFAULT 'todo',\n  `priority` enum('low','medium','high') NOT NULL DEFAULT 'medium',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_task_member_id` (`member_id`),\n  KEY `idx_task_publisher_member_id` (`publisher_member_id`),\n  KEY `idx_task_assignee_member_id` (`assignee_member_id`),\n  KEY `idx_task_status` (`status`),\n  KEY `idx_task_due_date` (`due_date`)\n) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_tasks",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 733,
+        "ddl": "CREATE TABLE `project_b_tasks` (\n  `id` bigint UNSIGNED NOT NULL,\n  `member_id` bigint UNSIGNED NOT NULL,\n  `publisher_member_id` bigint UNSIGNED NOT NULL,\n  `assignee_member_id` bigint UNSIGNED DEFAULT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `status` enum('todo','doing','done') NOT NULL DEFAULT 'todo',\n  `priority` enum('low','medium','high') NOT NULL DEFAULT 'medium',\n  `due_date` date DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_tasks",
+        "file": "platform/backend/api/project-b/task/tables.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_tasks (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  member_id BIGINT UNSIGNED NOT NULL,\n  publisher_member_id BIGINT UNSIGNED NOT NULL,\n  assignee_member_id BIGINT UNSIGNED NULL,\n  title VARCHAR(128) NOT NULL,\n  description TEXT NOT NULL,\n  status ENUM('todo', 'doing', 'done') NOT NULL DEFAULT 'todo',\n  priority ENUM('low', 'medium', 'high') NOT NULL DEFAULT 'medium',\n  due_date DATE NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  KEY idx_task_member_id (member_id),\n  KEY idx_task_publisher_member_id (publisher_member_id),\n  KEY idx_task_assignee_member_id (assignee_member_id),\n  KEY idx_task_status (status),\n  KEY idx_task_due_date (due_date)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-106",
+      "API-107",
+      "API-108",
+      "API-109",
+      "API-110",
+      "API-111"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_vote_ballots",
+    "declarations": [
+      {
+        "table": "project_b_vote_ballots",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 872,
+        "ddl": "CREATE TABLE `project_b_vote_ballots` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `vote_id` bigint(20) unsigned NOT NULL,\n  `option_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_vote_ballot` (`vote_id`,`option_id`,`member_id`),\n  KEY `idx_vote_ballot_member_id` (`member_id`),\n  KEY `idx_vote_ballot_vote_id` (`vote_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_vote_ballots",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 861,
+        "ddl": "CREATE TABLE `project_b_vote_ballots` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `vote_id` bigint(20) unsigned NOT NULL,\n  `option_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_vote_ballot` (`vote_id`,`option_id`,`member_id`),\n  KEY `idx_vote_ballot_member_id` (`member_id`),\n  KEY `idx_vote_ballot_vote_id` (`vote_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_vote_ballots",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 787,
+        "ddl": "CREATE TABLE `project_b_vote_ballots` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `vote_id` bigint(20) unsigned NOT NULL,\n  `option_id` bigint(20) unsigned NOT NULL,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_vote_ballot` (`vote_id`,`option_id`,`member_id`),\n  KEY `idx_vote_ballot_member_id` (`member_id`),\n  KEY `idx_vote_ballot_vote_id` (`vote_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_vote_ballots",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 875,
+        "ddl": "CREATE TABLE `project_b_vote_ballots` (\n  `id` bigint UNSIGNED NOT NULL,\n  `vote_id` bigint UNSIGNED NOT NULL,\n  `option_id` bigint UNSIGNED NOT NULL,\n  `member_id` bigint UNSIGNED NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_vote_ballots",
+        "file": "platform/backend/api/project-b/vote/tables.sql",
+        "line": 28,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_vote_ballots (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  vote_id BIGINT UNSIGNED NOT NULL,\n  option_id BIGINT UNSIGNED NOT NULL,\n  member_id BIGINT UNSIGNED NOT NULL,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  UNIQUE KEY uniq_vote_ballot (vote_id, option_id, member_id),\n  KEY idx_vote_ballot_member_id (member_id),\n  KEY idx_vote_ballot_vote_id (vote_id)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-112",
+      "API-113",
+      "API-114",
+      "API-115",
+      "API-116",
+      "API-117"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_vote_options",
+    "declarations": [
+      {
+        "table": "project_b_vote_options",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 925,
+        "ddl": "CREATE TABLE `project_b_vote_options` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `vote_id` bigint(20) unsigned NOT NULL,\n  `label` varchar(128) NOT NULL,\n  `sort_order` int(10) unsigned NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_vote_option_vote_id` (`vote_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_vote_options",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 914,
+        "ddl": "CREATE TABLE `project_b_vote_options` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `vote_id` bigint(20) unsigned NOT NULL,\n  `label` varchar(128) NOT NULL,\n  `sort_order` int(10) unsigned NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_vote_option_vote_id` (`vote_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_vote_options",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 817,
+        "ddl": "CREATE TABLE `project_b_vote_options` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `vote_id` bigint(20) unsigned NOT NULL,\n  `label` varchar(128) NOT NULL,\n  `sort_order` int(10) unsigned NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_vote_option_vote_id` (`vote_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_vote_options",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 918,
+        "ddl": "CREATE TABLE `project_b_vote_options` (\n  `id` bigint UNSIGNED NOT NULL,\n  `vote_id` bigint UNSIGNED NOT NULL,\n  `label` varchar(128) NOT NULL,\n  `sort_order` int UNSIGNED NOT NULL DEFAULT '0',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_vote_options",
+        "file": "platform/backend/api/project-b/vote/tables.sql",
+        "line": 19,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_vote_options (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  vote_id BIGINT UNSIGNED NOT NULL,\n  label VARCHAR(128) NOT NULL,\n  sort_order INT UNSIGNED NOT NULL DEFAULT 0,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  KEY idx_vote_option_vote_id (vote_id)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-112",
+      "API-113",
+      "API-114",
+      "API-115",
+      "API-116",
+      "API-117"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "project_b_votes",
+    "declarations": [
+      {
+        "table": "project_b_votes",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 976,
+        "ddl": "CREATE TABLE `project_b_votes` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `allow_multiple` tinyint(1) NOT NULL DEFAULT 0,\n  `anonymous` tinyint(1) NOT NULL DEFAULT 0,\n  `status` enum('open','closed') NOT NULL DEFAULT 'open',\n  `rule_mode` enum('all','time') NOT NULL DEFAULT 'all',\n  `rule_deadline` datetime DEFAULT NULL,\n  `rule_total_voters` int(10) unsigned NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_vote_member_id` (`member_id`),\n  KEY `idx_vote_status` (`status`),\n  KEY `idx_vote_rule_deadline` (`rule_deadline`)\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_votes",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 965,
+        "ddl": "CREATE TABLE `project_b_votes` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `allow_multiple` tinyint(1) NOT NULL DEFAULT 0,\n  `anonymous` tinyint(1) NOT NULL DEFAULT 0,\n  `status` enum('open','closed') NOT NULL DEFAULT 'open',\n  `rule_mode` enum('all','time') NOT NULL DEFAULT 'all',\n  `rule_deadline` datetime DEFAULT NULL,\n  `rule_total_voters` int(10) unsigned NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_vote_member_id` (`member_id`),\n  KEY `idx_vote_status` (`status`),\n  KEY `idx_vote_rule_deadline` (`rule_deadline`)\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_votes",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 845,
+        "ddl": "CREATE TABLE `project_b_votes` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `member_id` bigint(20) unsigned NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `allow_multiple` tinyint(1) NOT NULL DEFAULT 0,\n  `anonymous` tinyint(1) NOT NULL DEFAULT 0,\n  `status` enum('open','closed') NOT NULL DEFAULT 'open',\n  `rule_mode` enum('all','time') NOT NULL DEFAULT 'all',\n  `rule_deadline` datetime DEFAULT NULL,\n  `rule_total_voters` int(10) unsigned NOT NULL DEFAULT 0,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),\n  PRIMARY KEY (`id`),\n  KEY `idx_vote_member_id` (`member_id`),\n  KEY `idx_vote_status` (`status`),\n  KEY `idx_vote_rule_deadline` (`rule_deadline`)\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+      },
+      {
+        "table": "project_b_votes",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 837,
+        "ddl": "CREATE TABLE `project_b_votes` (\n  `id` bigint UNSIGNED NOT NULL,\n  `member_id` bigint UNSIGNED NOT NULL,\n  `title` varchar(128) NOT NULL,\n  `description` text NOT NULL,\n  `allow_multiple` tinyint(1) NOT NULL DEFAULT '0',\n  `status` enum('open','closed') NOT NULL DEFAULT 'open',\n  `rule_mode` enum('all','time') NOT NULL DEFAULT 'all',\n  `rule_deadline` datetime DEFAULT NULL,\n  `rule_total_voters` int UNSIGNED NOT NULL DEFAULT '0',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `anonymous` tinyint(1) NOT NULL DEFAULT '0'\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+      },
+      {
+        "table": "project_b_votes",
+        "file": "platform/backend/api/project-b/vote/tables.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS project_b_votes (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  member_id BIGINT UNSIGNED NOT NULL,\n  title VARCHAR(128) NOT NULL,\n  description TEXT NOT NULL,\n  allow_multiple TINYINT(1) NOT NULL DEFAULT 0,\n  anonymous TINYINT(1) NOT NULL DEFAULT 0,\n  status ENUM('open', 'closed') NOT NULL DEFAULT 'open',\n  rule_mode ENUM('all', 'time') NOT NULL DEFAULT 'all',\n  rule_deadline DATETIME NULL,\n  rule_total_voters INT UNSIGNED NOT NULL DEFAULT 0,\n  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  KEY idx_vote_member_id (member_id),\n  KEY idx_vote_status (status),\n  KEY idx_vote_rule_deadline (rule_deadline)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+      }
+    ],
+    "routes": [
+      "API-112",
+      "API-113",
+      "API-114",
+      "API-115",
+      "API-116",
+      "API-117"
+    ],
+    "target": "project-b 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "site_visit_daily",
+    "declarations": [
+      {
+        "table": "site_visit_daily",
+        "file": "platform/backend/sql/dinecore/004_dinecore_visitor_stats.sql",
+        "line": 1,
+        "ddl": "CREATE TABLE IF NOT EXISTS site_visit_daily (\n  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,\n  visit_date DATE NOT NULL,\n  ip_address VARCHAR(45) NOT NULL,\n  path VARCHAR(255) NOT NULL,\n  source_tag VARCHAR(32) NOT NULL DEFAULT 'direct',\n  visit_count INT UNSIGNED NOT NULL DEFAULT 1,\n  first_visited_at DATETIME NOT NULL,\n  last_visited_at DATETIME NOT NULL,\n  created_at DATETIME NOT NULL,\n  updated_at DATETIME NOT NULL,\n  PRIMARY KEY (id),\n  UNIQUE KEY uniq_visit_daily (visit_date, ip_address, path, source_tag),\n  KEY idx_visit_date (visit_date),\n  KEY idx_path (path),\n  KEY idx_source_tag (source_tag)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-013",
+      "API-038"
+    ],
+    "target": "dineCore 專屬 D1",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "user_tokens",
+    "declarations": [
+      {
+        "table": "user_tokens",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 1024,
+        "ddl": "CREATE TABLE `user_tokens` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `token` varchar(128) NOT NULL,\n  `revoked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_token` (`token`),\n  KEY `idx_user_id` (`user_id`),\n  KEY `idx_revoked_at` (`revoked_at`)\n) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;"
+      },
+      {
+        "table": "user_tokens",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 1013,
+        "ddl": "CREATE TABLE `user_tokens` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `token` varchar(128) NOT NULL,\n  `revoked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_token` (`token`),\n  KEY `idx_user_id` (`user_id`),\n  KEY `idx_revoked_at` (`revoked_at`)\n) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;"
+      },
+      {
+        "table": "user_tokens",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 882,
+        "ddl": "CREATE TABLE `user_tokens` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL,\n  `token` varchar(128) NOT NULL,\n  `revoked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uniq_token` (`token`),\n  KEY `idx_user_id` (`user_id`),\n  KEY `idx_revoked_at` (`revoked_at`)\n) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;"
+      },
+      {
+        "table": "user_tokens",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 1015,
+        "ddl": "CREATE TABLE `user_tokens` (\n  `id` int UNSIGNED NOT NULL,\n  `user_id` int UNSIGNED NOT NULL,\n  `token` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n  `revoked_at` datetime DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-014",
+      "API-015",
+      "API-016",
+      "API-017",
+      "API-018",
+      "API-019",
+      "API-020",
+      "API-021",
+      "API-022",
+      "API-023",
+      "API-024",
+      "API-025",
+      "API-026",
+      "API-027",
+      "API-028",
+      "API-029",
+      "API-030",
+      "API-031",
+      "API-032",
+      "API-033",
+      "API-034",
+      "API-035",
+      "API-036",
+      "API-037",
+      "API-038",
+      "API-039",
+      "API-040",
+      "API-041",
+      "API-042",
+      "API-043",
+      "API-044",
+      "API-045",
+      "API-046",
+      "API-047",
+      "API-048",
+      "API-049",
+      "API-050",
+      "API-051",
+      "API-052",
+      "API-053",
+      "API-054",
+      "API-055",
+      "API-056",
+      "API-057",
+      "API-058",
+      "API-059",
+      "API-060",
+      "API-061",
+      "API-062",
+      "API-063",
+      "API-064",
+      "API-065",
+      "API-066",
+      "API-067",
+      "API-068",
+      "API-069",
+      "API-070",
+      "API-071",
+      "API-072",
+      "API-073",
+      "API-074",
+      "API-076",
+      "API-077",
+      "API-078",
+      "API-079",
+      "API-080",
+      "API-081",
+      "API-082",
+      "API-083",
+      "API-084",
+      "API-085",
+      "API-086",
+      "API-087",
+      "API-088",
+      "API-089",
+      "API-090",
+      "API-091",
+      "API-092",
+      "API-093",
+      "API-094",
+      "API-095",
+      "API-096",
+      "API-097",
+      "API-098",
+      "API-099",
+      "API-100",
+      "API-101"
+    ],
+    "target": "共用資料待依專案切分，保留關聯",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  },
+  {
+    "table": "users",
+    "declarations": [
+      {
+        "table": "users",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754.sql",
+        "line": 1095,
+        "ddl": "CREATE TABLE `users` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `tenant_id` varchar(50) NOT NULL COMMENT '世界 / 專案識別，用於 world rebuild',\n  `username` varchar(50) NOT NULL COMMENT '登入帳號（tenant scope）',\n  `password` varchar(255) NOT NULL COMMENT '密碼（可暫時明文或簡單 hash）',\n  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=active, 0=disabled',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ux_users_tenant_username` (`tenant_id`,`username`)\n) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "users",
+        "file": "platform/backend/sql/backups/moducore_platform_20260305_111754_infinityfree.sql",
+        "line": 1084,
+        "ddl": "CREATE TABLE `users` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `tenant_id` varchar(50) NOT NULL COMMENT '世界 / 專案識別，用於 world rebuild',\n  `username` varchar(50) NOT NULL COMMENT '登入帳號（tenant scope）',\n  `password` varchar(255) NOT NULL COMMENT '密碼（可暫時明文或簡單 hash）',\n  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=active, 0=disabled',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ux_users_tenant_username` (`tenant_id`,`username`)\n) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "users",
+        "file": "platform/backend/sql/dinecore/dinecore_full_2026-03-05.sql",
+        "line": 912,
+        "ddl": "CREATE TABLE `users` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `tenant_id` varchar(50) NOT NULL COMMENT '世界 / 專案識別，用於 world rebuild',\n  `username` varchar(50) NOT NULL COMMENT '登入帳號（tenant scope）',\n  `password` varchar(255) NOT NULL COMMENT '密碼（可暫時明文或簡單 hash）',\n  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=active, 0=disabled',\n  `created_at` datetime NOT NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ux_users_tenant_username` (`tenant_id`,`username`)\n) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      },
+      {
+        "table": "users",
+        "file": "platform/backend/sql/moducore_platform_0309.sql",
+        "line": 960,
+        "ddl": "CREATE TABLE `users` (\n  `id` int UNSIGNED NOT NULL,\n  `tenant_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '世界 / 專案識別，用於 world rebuild',\n  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '登入帳號（tenant scope）',\n  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密碼（可暫時明文或簡單 hash）',\n  `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=disabled',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      }
+    ],
+    "routes": [
+      "API-014",
+      "API-015",
+      "API-016",
+      "API-017",
+      "API-018",
+      "API-019",
+      "API-020",
+      "API-021",
+      "API-022",
+      "API-023",
+      "API-024",
+      "API-025",
+      "API-026",
+      "API-027",
+      "API-028",
+      "API-029",
+      "API-030",
+      "API-031",
+      "API-032",
+      "API-033",
+      "API-034",
+      "API-035",
+      "API-036",
+      "API-037",
+      "API-038",
+      "API-039",
+      "API-040",
+      "API-041",
+      "API-042",
+      "API-043",
+      "API-044",
+      "API-045",
+      "API-046",
+      "API-047",
+      "API-048",
+      "API-049",
+      "API-050",
+      "API-051",
+      "API-052",
+      "API-053",
+      "API-054",
+      "API-055",
+      "API-056",
+      "API-057",
+      "API-058",
+      "API-059",
+      "API-060",
+      "API-061",
+      "API-062",
+      "API-063",
+      "API-064",
+      "API-065",
+      "API-066",
+      "API-067",
+      "API-068",
+      "API-069",
+      "API-070",
+      "API-071",
+      "API-072",
+      "API-073",
+      "API-074",
+      "API-076",
+      "API-077",
+      "API-078",
+      "API-079",
+      "API-080",
+      "API-081",
+      "API-082",
+      "API-083",
+      "API-084",
+      "API-085",
+      "API-086",
+      "API-087",
+      "API-088",
+      "API-089",
+      "API-090",
+      "API-091",
+      "API-092",
+      "API-093",
+      "API-094",
+      "API-095",
+      "API-096",
+      "API-097",
+      "API-098",
+      "API-100",
+      "API-101",
+      "API-102",
+      "API-103",
+      "API-104"
+    ],
+    "target": "共用資料待依專案切分，保留關聯",
+    "migrationStatus": "待選定 Schema 基線及轉寫 SQLite；未匯入舊資料"
+  }
+]

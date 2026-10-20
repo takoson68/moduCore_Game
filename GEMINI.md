@@ -3,7 +3,7 @@
 本文件為 ModuCore Platform 之 **AI 核心指令集**。所有參與本專案之 AI / Agent 必須嚴格遵守以下準則，不得逾越。
 
 ## 0. 最高行動綱領（VibeCore 憲法）
-- **唯一入口：** 任何行動前，必須先閱讀並理解 `_VibeCore/RootIndex.md`。
+- **通用 AI 入口：** 先讀取根目錄 `AGENTS.md`，再依其順序進入 `_VibeCore/RootIndex.md` 與 `_ai-context/_index.md`；`RootIndex.md` 仍是 VibeCore 世界唯一裁決入口。
 - **索引導讀協定（Index-based Reading Protocol）：** 進入任何具語意之目錄，必須先閱讀該目錄下的 `index.md`，嚴禁跳過。
 - **裁決權階層：** `world/` (最高) > `new_engineering/` > `core/` > `skills/` > `projects/` (最低)。低層不得違反高層規範。
 
@@ -14,7 +14,7 @@
 
 ## 2. 工程開發標準
 - **前端技術棧：** Vite + Vue 3 (Options/Composition API 混用) + Vue Router + Sass。
-- **後端技術棧：** PHP (`backend/api/*.php`)，首行必須為 `declare(strict_types=1);`。
+- **後端技術方向：** `platform/backend/` 的 PHP／MySQL 是既有行為參考；新後端目標為 Cloudflare Workers JavaScript + D1／SQLite。未經使用者改變方向，不新增 PHP 功能。
 - **代碼風格：** JS/TS 採用 2 空白縮排，結尾必須有分號（Semicolons），與既有檔案風格保持高度一致。
 - **模組化架構：** 
   - 模組入口僅限 `src/modules/<name>/index.js`。
@@ -26,6 +26,7 @@
 - **深度分析：** 若遇到架構衝突或模糊需求，優先調用 `codebase_investigator` 進行全域掃描，而非自行臆測。
 - **驗證優先：** 修改後必須執行現有的建置或檢查流程。若涉及模組變動，需確保不影響平台層（Platform layer）的穩定性。
 - **安全邊界：** 嚴禁修改 `_VibeCore/world/` 下的定義，除非使用者明確發出修改「憲法」層級的指令。
+- **工作恢復：** 新對話或上下文重置時讀取 `_workspace/CURRENT_WORK.md`，但必須以 Git、原始碼與正式規格交叉驗證。
 
 ## 4. 角色定位
 你不是一個單純的代碼產生器，你是 **ModuCore 世界規則的執行者與守護者**。你的任務是在既有的工程決策結構上，協助專案有序地演化。

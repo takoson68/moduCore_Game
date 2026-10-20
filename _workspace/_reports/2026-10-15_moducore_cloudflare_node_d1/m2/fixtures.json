@@ -1,0 +1,87 @@
+{
+  "status": "source-derived-candidates-not-runtime-golden",
+  "note": "所有資料為合成範例。尚未呼叫舊 PHP，不能當成已通過的 Golden Fixtures；須先依 preconditions 建立隔離測試資料庫。禁止對未知資料環境執行寫入樣本。",
+  "cases": [
+    {
+      "id": "health-success",
+      "scenario": "正常",
+      "request": {"method":"GET","path":"/health"},
+      "expected": {"status":200,"json":{"ok":true,"data":{"time":"<ISO8601>"}}},
+      "assertion": "time 必須符合 ISO8601；非固定日期值",
+      "source":"platform/backend/src/Controllers/HealthController.php:11",
+      "preconditions": ["需能直接 dispatch 舊 Router；Apache .htaccess 未明確將 /health 導向 api.php，不能假設公開 URL 有效"]
+    },
+    {
+      "id":"login-project-required",
+      "scenario":"驗證失敗",
+      "request":{"method":"POST","path":"/api/login","headers":{},"body":{}},
+      "expected":{"status":400,"json":{"success":false,"message":"缺少專案識別"}},
+      "source":"platform/backend/src/Controllers/AuthController.php:203",
+      "preconditions":[]
+    },
+    {
+      "id":"login-credentials-required",
+      "scenario":"驗證失敗",
+      "request":{"method":"POST","path":"/api/login","headers":{"X-Project":"project-b"},"body":{}},
+      "expected":{"status":400,"json":{"success":false,"message":"缺少帳號或密碼"}},
+      "source":"platform/backend/src/Controllers/AuthController.php:215",
+      "preconditions":[]
+    },
+    {
+      "id":"session-anonymous",
+      "scenario":"正常匿名 session",
+      "request":{"method":"GET","path":"/api/session","headers":{"X-Project":"project-b"}},
+      "expected":{"status":200,"json":{"success":true,"authenticated":false,"user":null,"token":null}},
+      "source":"platform/backend/src/Controllers/AuthController.php:259",
+      "preconditions":["未提供 Token"]
+    },
+    {
+      "id":"employee-create-required-fields",
+      "scenario":"驗證失敗",
+      "request":{"method":"POST","path":"/api/employees/create","body":{}},
+      "expected":{"status":400,"json":{"success":false,"message":"Missing name or email"}},
+      "source":"platform/backend/src/Controllers/EmployeeController.php:55",
+      "preconditions":[]
+    },
+    {
+      "id":"employee-delete-missing-record",
+      "scenario":"資料不存在的舊有行為",
+      "request":{"method":"POST","path":"/api/employees/delete","body":{"id":987654321}},
+      "expected":{"status":200,"json":{"success":true}},
+      "source":"platform/backend/src/Controllers/EmployeeController.php:135",
+      "preconditions":["隔離測試庫有 project_b_employees 且指定 member_id 不存在；此請求會寫入資料庫"]
+    },
+    {
+      "id":"dinecore-table-required",
+      "scenario":"驗證失敗",
+      "request":{"method":"GET","path":"/api/dinecore/menu"},
+      "expected":{"status":422,"json":{"ok":false,"error":{"code":"VALIDATION_FAILED","message":"TABLE_CODE_REQUIRED"}}},
+      "source":"platform/backend/src/Controllers/DineCoreGuestApiController.php:271",
+      "preconditions":[]
+    },
+    {
+      "id":"dinecore-table-missing",
+      "scenario":"資料不存在",
+      "request":{"method":"GET","path":"/api/dinecore/menu?tableCode=MISSING_TEST"},
+      "expected":{"status":404,"json":{"ok":false,"error":{"code":"NOT_FOUND","message":"TABLE_NOT_FOUND"}}},
+      "source":"platform/backend/src/Controllers/DineCoreGuestApiController.php:299",
+      "preconditions":["隔離測試庫有 dinecore_tables；MISSING_TEST 桌號不存在"]
+    },
+    {
+      "id":"dinecore-staff-session-required",
+      "scenario":"未授權",
+      "request":{"method":"GET","path":"/api/dinecore/staff/tables"},
+      "expected":{"status":401,"json":{"ok":false,"error":{"code":"STAFF_SESSION_REQUIRED","message":"STAFF_SESSION_REQUIRED"}}},
+      "source":"platform/backend/src/Controllers/DineCoreStaffApiController.php:2216",
+      "preconditions":["未提供 Token"]
+    },
+    {
+      "id":"dinecore-staff-role-forbidden",
+      "scenario":"權限不足",
+      "request":{"method":"GET","path":"/api/dinecore/staff/tables","headers":{"Authorization":"Bearer <SYNTHETIC_GUEST_ROLE_TOKEN>"}},
+      "expected":{"status":403,"json":{"ok":false,"error":{"code":"STAFF_ROLE_FORBIDDEN","message":"STAFF_ROLE_FORBIDDEN"}}},
+      "source":"platform/backend/src/Controllers/DineCoreStaffApiController.php:2216",
+      "preconditions":["隔離測試庫存在啟用的 dineCore 使用者、有效 user_tokens、啟用 staff profile；角色不在 counter/kitchen/deputy_manager/manager 中；Token 值僅於本機 seed 產生"]
+    }
+  ]
+}
